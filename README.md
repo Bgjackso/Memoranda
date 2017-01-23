@@ -11,11 +11,11 @@ In the docs directory are a few starting documents that may help you get going o
 
 Also in the docs directory is an initial set of analysis models - class diagrams and sequence diagrams in UML, that a previous team did as part of their solution process. These were included only in the event that you may want to use these as a head start on your design and implementation work. You are absolutely not required to use or implement anything in the analysis document!
 
-Your first step should be to clone the github repository (easiest way is to clone directly into your Eclipse Workspace folder). You should then create a new Java project and uncheck default directory and browse to the cloned directory. Clicking finish should import the whole project with all references to the libraries and so forth. There are other possibilities to set up your project but they might include setting your BuildPath. You can use any method you like but don't change the project structure (like copy/pasting files to different folders).
+Your first step should be to clone the Github repository (easiest way is to clone directly into your Eclipse Workspace folder). You should then create a new Java project and un-check default directory and browse to the cloned directory. Clicking finish should import the whole project with all references to the libraries and so forth. There are other possibilities to set up your project but they might include setting your BuildPath. You can use any method you like but don't change the project structure (like copy/pasting files to different folders).
 
 You should then be able to run the project. The included ant script should work, and you should also be able to run it directly from within Eclipse (Start.java) or the command line or from the .bat/.sh scripts provided. Hint: After running and closing the window from Memoranda make sure you also terminate the the program in eclipse if it is still running (closing the window does not always terminate the program).
 
-Try to change minimal things to see how everything works. After that go back to the initial version and start your SCRUM process and document all changes through github and Taiga (like I said, if it isn’t in github/taiga it does not count).
+Try to change minimal things to see how everything works. After that go back to the initial version and start your SCRUM process and document all changes through github and Taiga (like I said, if it isn't in Github/Taiga it does not count).
 
 Enjoy!
 Dr. Mehlhase
