@@ -15,7 +15,7 @@ Your first step should be to clone the Github repository (easiest way is to clon
 
 You should then be able to run the project. The included ant script should work, and you should also be able to run it directly from within Eclipse (Start.java) or the command line or from the .bat/.sh scripts provided. Hint: After running and closing the window from Memoranda make sure you also terminate the the program in eclipse if it is still running (closing the window does not always terminate the program).
 
-Try to change minimal things to see how everything works. After that go back to the initial version and start your SCRUM process and document all changes through github and Taiga (like I said, if it isn't in Github/Taiga it does not count).
+Try to change minimal things to see how everything works. After that go back to the initial version and start your SCRUM process and document all changes through github and Taiga (like I said, if it isn't in Github/Taiga it does not count).  
 
 Enjoy!
 Dr. Mehlhase
