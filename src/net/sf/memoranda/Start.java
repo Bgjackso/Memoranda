@@ -36,7 +36,7 @@ public class Start {
             }
             /*DEBUG*/ //System.out.println("Port " + DEFAULT_PORT + " used.");
         }
-        
+
         String check = Configuration.get("CHECK_IF_ALREADY_STARTED").toString().trim();
         if (check.length() > 0 && check.equalsIgnoreCase("no")) {
             checkIfAlreadyStartet = false;
