@@ -33,6 +33,7 @@ import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.Local;
 
 /*$Id: StickerDialog.java,v 1.5 2004/10/07 21:31:33 ivanrise Exp $*/
+
 public class StickerDialog extends JDialog {
 	public boolean CANCELLED = true;
 	JPanel panel1 = new JPanel();
@@ -132,7 +133,7 @@ public class StickerDialog extends JDialog {
 		if (sP > -1 && sP < 5)
 			priorityList.setSelectedIndex(sP);
 		else
-			priorityList.setSelectedIndex(2);
+			priorityList.setSelectedIndex(2); 
 		if(size==10)
 			fontSize.setSelectedIndex(0);
 		else if(size == 20)
@@ -140,6 +141,7 @@ public class StickerDialog extends JDialog {
 		else fontSize.setSelectedIndex(1);
 	}
 
+	
 	public StickerDialog() {
 		this(null);
 	}
@@ -217,7 +219,7 @@ public class StickerDialog extends JDialog {
 		jLabel1.setText(Local.getString("Sticker color")+": ");
 		jLabel2.setText(Local.getString("Font color")+": ");
 		jLabel3.setText(Local.getString("Font Size")+": ");
-		jLabel4.setText(Local.getString("Priority")+": ");
+		//jLabel4.setText(Local.getString("Priority")+": ");
 		jPanel1.setLayout(gridLayout1);
 		panel1.setBorder(border1);
 		jPanel1.setBorder(border2);
@@ -244,7 +246,7 @@ public class StickerDialog extends JDialog {
 		jPanel1.add(underlineButton);
 		jPanel1.add(unorderedListButton);
 		jPanel1.add(jLabel4);
-		jPanel1.add(priorityList);
+		//jPanel1.add(priorityList);
 		
 		if (Context.get("STICKER_COLOR") != null) {
 			Color c = new Color(new Integer(Context.get("STICKER_COLOR").toString()).intValue());
