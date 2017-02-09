@@ -103,7 +103,7 @@ public class AppFrame extends JFrame {
         }
     };
 
-    public Action minimizeAction = new AbstractAction("Close the window") {
+    public Action minimizeAction = new AbstractAction("Minimize the window") {
         public void actionPerformed(ActionEvent e) {
             doMinimize();
         }
@@ -664,10 +664,10 @@ public class AppFrame extends JFrame {
         System.exit(0);
     }
 
-    public void doMinimize() {
+    public void doMinimize() {  //here is minimize functionality ?? why closeWindow?
         exitNotify();
         App.closeWindow();
-    }
+        }
 
     //Help | About action performed
     public void jMenuHelpAbout_actionPerformed(ActionEvent e) {

@@ -33,7 +33,7 @@ public class ExitConfirmationDialog extends JDialog implements WindowListener {
     JButton okB = new JButton();
     JButton cancelB = new JButton();
 	
-	public JCheckBox donotaskCB = new JCheckBox();
+	//public JCheckBox donotaskCB = new JCheckBox();
 	
 	JPanel mainPanel = new JPanel(new BorderLayout());
 	
@@ -67,11 +67,11 @@ public class ExitConfirmationDialog extends JDialog implements WindowListener {
 		confirm.setText("<HTML>"+Local.getString("This action will cause Memoranda to exit") + 
 										"<p>" + Local.getString("Do you want to continue?"));
 										
-		donotaskCB.setText(Local.getString("do not ask again"));
-		donotaskCB.setHorizontalAlignment(SwingConstants.CENTER);
+		/*donotaskCB.setText(Local.getString("do not ask again"));
+		donotaskCB.setHorizontalAlignment(SwingConstants.CENTER); */
 		
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		mainPanel.add(donotaskCB,BorderLayout.SOUTH);
+		//mainPanel.add(donotaskCB,BorderLayout.SOUTH);
 		mainPanel.add(confirm,BorderLayout.CENTER);
 		
 	    // Build ButtonsPanel
@@ -107,23 +107,23 @@ public class ExitConfirmationDialog extends JDialog implements WindowListener {
 	}
 	
 	// if donotaskCB is checked update Configuration.
-	public void  checkDoNotAsk() {
+	/*public void  checkDoNotAsk() {
 		if (this.donotaskCB.isSelected()) {
 			Configuration.put("ASK_ON_EXIT", "no");
 			Configuration.saveConfig();
 		}
 	}
-	
+	*/
 	// ok button action
     void okB_actionPerformed(ActionEvent e) {
-		checkDoNotAsk();
+		//checkDoNotAsk();
         this.dispose();
     }
 
 	//cancel button action
     void cancelB_actionPerformed(ActionEvent e) {
         CANCELLED = true;
-		checkDoNotAsk();
+		//checkDoNotAsk();
         this.dispose();
     }
 	
