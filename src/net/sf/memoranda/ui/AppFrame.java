@@ -1,5 +1,8 @@
 package net.sf.memoranda.ui;
 
+import java.awt.Desktop; // new - B
+import java.net.URI;     // new - B
+import java.net.URISyntaxException;
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,6 +14,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -631,18 +635,49 @@ public class AppFrame extends JFrame {
         });
 
     }
-   
+   // new - B {
     protected void jMenuHelpBug_actionPerformed(ActionEvent e) {
-        Util.runBrowser(App.BUGS_TRACKER_URL);
+       // Util.runBrowser(App.BUGS_TRACKER_URL);
+    	if(Desktop.isDesktopSupported())
+    	{
+    	  try {
+			Desktop.getDesktop().browse(new URI("http://sourceforge.net/tracker/?group_id=90997&atid=595566"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
+		}
+    	}
     }
    
     protected void jMenuHelpWeb_actionPerformed(ActionEvent e) {
-        Util.runBrowser(App.WEBSITE_URL);
+       // Util.runBrowser(App.WEBSITE_URL);
+    	if(Desktop.isDesktopSupported())
+    	{
+    	  try {
+			Desktop.getDesktop().browse(new URI("http://memoranda.sourceforge.net"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
+		}
+    	}
     }
    
     protected void jMenuHelpGuide_actionPerformed(ActionEvent e) {
-        Util.runBrowser(App.GUIDE_URL);
+        //Util.runBrowser(App.GUIDE_URL);
+    	if(Desktop.isDesktopSupported())
+    	{
+    	  try {
+			Desktop.getDesktop().browse(new URI("http://memoranda.sourceforge.net/guide.html"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
+		}
+    	}
     }
+    // new - B }
     
     //File | Exit action performed
     public void doExit() {
