@@ -33,6 +33,7 @@ import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.Local;
 
 /*$Id: StickerDialog.java,v 1.5 2004/10/07 21:31:33 ivanrise Exp $*/
+
 public class StickerDialog extends JDialog {
 	public boolean CANCELLED = true;
 	JPanel panel1 = new JPanel();
@@ -56,7 +57,7 @@ public class StickerDialog extends JDialog {
 	JLabel jLabel2 = new JLabel();
 	JLabel jLabel3 = new JLabel();
 	JLabel jLabel4 = new JLabel();
-	GridLayout gridLayout1 = new GridLayout(6,2);
+	GridLayout gridLayout1 = new GridLayout(5,2); //orig (6,2)
 
 	Border border1;
 	Border border2;
@@ -132,7 +133,7 @@ public class StickerDialog extends JDialog {
 		if (sP > -1 && sP < 5)
 			priorityList.setSelectedIndex(sP);
 		else
-			priorityList.setSelectedIndex(2);
+			priorityList.setSelectedIndex(2); 
 		if(size==10)
 			fontSize.setSelectedIndex(0);
 		else if(size == 20)
@@ -140,6 +141,7 @@ public class StickerDialog extends JDialog {
 		else fontSize.setSelectedIndex(1);
 	}
 
+	
 	public StickerDialog() {
 		this(null);
 	}
@@ -154,7 +156,7 @@ public class StickerDialog extends JDialog {
 				BorderFactory.createEtchedBorder(
 					Color.white,
 					new Color(156, 156, 158)),
-				BorderFactory.createEmptyBorder(5, 5, 5, 5));
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)); 
 		border2 = BorderFactory.createEmptyBorder(5, 0, 5, 0);
 		panel1.setLayout(borderLayout1);
 		this.getContentPane().setLayout(borderLayout2);
@@ -215,9 +217,9 @@ public class StickerDialog extends JDialog {
 		//header.setHorizontalAlignment(SwingConstants.LEFT);
 
 		jLabel1.setText(Local.getString("Sticker color")+": ");
-		jLabel2.setText(Local.getString("Font color")+": ");
+		//jLabel2.setText(Local.getString("Font color")+": ");
 		jLabel3.setText(Local.getString("Font Size")+": ");
-		jLabel4.setText(Local.getString("Priority")+": ");
+		//jLabel4.setText(Local.getString("Priority")+": ");
 		jPanel1.setLayout(gridLayout1);
 		panel1.setBorder(border1);
 		jPanel1.setBorder(border2);
@@ -234,8 +236,8 @@ public class StickerDialog extends JDialog {
 		
 		jPanel1.add(jLabel1);
 		jPanel1.add(stickerColor);
-		jPanel1.add(jLabel2);
-		jPanel1.add(textColor);
+		//jPanel1.add(jLabel2); 
+		//jPanel1.add(textColor);
 		jPanel1.add(jLabel3);
 		jPanel1.add(fontSize);
 		
@@ -244,7 +246,7 @@ public class StickerDialog extends JDialog {
 		jPanel1.add(underlineButton);
 		jPanel1.add(unorderedListButton);
 		jPanel1.add(jLabel4);
-		jPanel1.add(priorityList);
+		//jPanel1.add(priorityList);
 		
 		if (Context.get("STICKER_COLOR") != null) {
 			Color c = new Color(new Integer(Context.get("STICKER_COLOR").toString()).intValue());
