@@ -57,7 +57,7 @@ public class StickerDialog extends JDialog {
 	JLabel jLabel2 = new JLabel();
 	JLabel jLabel3 = new JLabel();
 	JLabel jLabel4 = new JLabel();
-	GridLayout gridLayout1 = new GridLayout(6,2);
+	GridLayout gridLayout1 = new GridLayout(5,2); //orig (6,2)
 
 	Border border1;
 	Border border2;
@@ -156,7 +156,7 @@ public class StickerDialog extends JDialog {
 				BorderFactory.createEtchedBorder(
 					Color.white,
 					new Color(156, 156, 158)),
-				BorderFactory.createEmptyBorder(5, 5, 5, 5));
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)); 
 		border2 = BorderFactory.createEmptyBorder(5, 0, 5, 0);
 		panel1.setLayout(borderLayout1);
 		this.getContentPane().setLayout(borderLayout2);
@@ -217,7 +217,7 @@ public class StickerDialog extends JDialog {
 		//header.setHorizontalAlignment(SwingConstants.LEFT);
 
 		jLabel1.setText(Local.getString("Sticker color")+": ");
-		jLabel2.setText(Local.getString("Font color")+": ");
+		//jLabel2.setText(Local.getString("Font color")+": ");
 		jLabel3.setText(Local.getString("Font Size")+": ");
 		//jLabel4.setText(Local.getString("Priority")+": ");
 		jPanel1.setLayout(gridLayout1);
@@ -236,8 +236,8 @@ public class StickerDialog extends JDialog {
 		
 		jPanel1.add(jLabel1);
 		jPanel1.add(stickerColor);
-		jPanel1.add(jLabel2);
-		jPanel1.add(textColor);
+		//jPanel1.add(jLabel2); 
+		//jPanel1.add(textColor);
 		jPanel1.add(jLabel3);
 		jPanel1.add(fontSize);
 		

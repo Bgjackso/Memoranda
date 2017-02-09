@@ -18,7 +18,7 @@ import net.sf.memoranda.util.Configuration;
  *
  */
 /*$Id: Start.java,v 1.7 2004/11/22 10:02:37 alexeya Exp $*/
-//CHANGED comment for git thingy 
+
 public class Start {
     
     static App app = null;
@@ -37,7 +37,7 @@ public class Start {
             }
             /*DEBUG*/ //System.out.println("Port " + DEFAULT_PORT + " used.");
         }
-
+        
         String check = Configuration.get("CHECK_IF_ALREADY_STARTED").toString().trim();
         if (check.length() > 0 && check.equalsIgnoreCase("no")) {
             checkIfAlreadyStartet = false;
