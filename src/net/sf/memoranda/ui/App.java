@@ -35,8 +35,8 @@ public class App {
        The actual values are substituted by the Ant build script using 
        'version' property and datestamp.*/
 
-	public static final String VERSION_INFO = "@VERSION@";
-	public static final String BUILD_INFO = "@BUILD@";
+	public static final String VERSION_INFO = "1.0-rc3.1";
+	public static final String BUILD_INFO = "20170205.33";
 	
 	/*========================================================================*/
 
@@ -51,6 +51,15 @@ public class App {
 		} else
 			init();
 	}
+	public static void showFrame() {
+		if (frame.isVisible()) {
+			frame.setState(frame.NORMAL);
+			frame.toFront();
+			frame.requestFocus();
+			frame.repaint();
+		} //else
+//			init();
+}
 
 	public App(boolean fullmode) {
 		super();
@@ -137,6 +146,8 @@ public class App {
 		frame.requestFocus();
 
 	}
+	
+	
 
 	public static void closeWindow() {
 		if (frame == null)
