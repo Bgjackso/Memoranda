@@ -52,7 +52,7 @@ public class AgendaPanel extends JPanel {
 	JScrollPane scrollPane = new JScrollPane();
 
 	DailyItemsPanel parentPanel = null;
-
+	
 	//	JPopupMenu agendaPPMenu = new JPopupMenu();
 	//	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 
@@ -185,7 +185,7 @@ public class AgendaPanel extends JPanel {
 							txt = txt.replaceAll("\\n", "<br>");
 							txt = "<div style=\"background-color:"+dlg.getStickerColor()+";font-size:"+dlg.getStickerTextSize()+";color:"+dlg.getStickerTextColor()+";\">"+txt+"</div>";
 							EventsManager.removeSticker(id);
-							EventsManager.createSticker(txt, sP);
+							EventsManager.createSticker(txt, sP); //why does this work??
 							CurrentStorage.get().storeEventsManager();
 						 }
 						 refresh(CurrentDate.get());
