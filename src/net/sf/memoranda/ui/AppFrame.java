@@ -107,10 +107,11 @@ public class AppFrame extends JFrame {
         }
     };
 
-    public Action minimizeAction = new AbstractAction("Minimize the window") {
+    public Action minimizeAction = new AbstractAction("Hide the window") { // Minimize action does not 'close' the window, it Hides to taskbar so to allow other tasks on system.
         public void actionPerformed(ActionEvent e) {
             doMinimize();
         }
+     
     };
 
     public Action preferencesAction = new AbstractAction("Preferences") {
@@ -701,7 +702,7 @@ public class AppFrame extends JFrame {
 
     public void doMinimize() {  //here is minimize functionality ?? why closeWindow?
         exitNotify();
-        App.closeWindow();
+        //App.closeWindow();  Comment out. Doesn't allow actual minimize feature. Nichole E.
         }
 
     //Help | About action performed
@@ -724,7 +725,7 @@ public class AppFrame extends JFrame {
         }
         else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
             super.processWindowEvent(new WindowEvent(this,
-                    WindowEvent.WINDOW_CLOSING));
+                    WindowEvent.WINDOW_CLOSED)); //Close the window to taskbar Nichole E.
             doMinimize();
         }
         else
