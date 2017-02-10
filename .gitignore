@@ -6,3 +6,5 @@ README.txt
 .project
 .DS_Store
 /classes/
+/dist/
+build.number
