@@ -51,6 +51,15 @@ public class App {
 		} else
 			init();
 	}
+	public static void showFrame() {
+		if (frame.isVisible()) {
+			frame.setState(frame.NORMAL);
+			frame.toFront();
+			frame.requestFocus();
+			frame.repaint();
+		} //else
+//			init();
+}
 
 	public App(boolean fullmode) {
 		super();
@@ -137,6 +146,8 @@ public class App {
 		frame.requestFocus();
 
 	}
+	
+	
 
 	public static void closeWindow() {
 		if (frame == null)
