@@ -1,6 +1,7 @@
 package net.sf.memoranda.util;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
@@ -84,8 +85,8 @@ public class Local {
 
     static String monthnames[] =
         {
-            "Jan",
-            "Feb",
+            "January",
+            "February",
             "March",
             "April",
             "May",
@@ -254,6 +255,14 @@ public class Local {
             return null;
         }
         return time;
+    }
+    
+    public static Object[] getYears(){
+    	ArrayList<Integer> years_tmp = new ArrayList<Integer>();
+    	  for(int years = 2000; years<=2999; years++){
+    	  years_tmp.add(years);
+    	}
+    	  return years_tmp.toArray();
     }
 
 }
