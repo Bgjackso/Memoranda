@@ -352,7 +352,7 @@ public class EventsPanel extends JPanel {
     	saveEvents();
     }
 
-    private void saveEvents() {
+    public void saveEvents() {
 	CurrentStorage.get().storeEventsManager();
         eventsTable.refresh();
         EventsScheduler.init();
