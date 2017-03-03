@@ -4,5 +4,5 @@ jdk: oraclejdk8
 script:
 
   ant compile
-  ant finbugs
+  ant findbugs
   ant checkstyle
