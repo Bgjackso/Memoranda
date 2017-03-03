@@ -22,7 +22,8 @@ public class ExportFilter extends FileFilter {
     public static final String HTML = "HTML";
     public static final String XHTML = "XHTML";
     public static final String ZIP = "ZIP";
-
+    public static final String ICS = "ICS";
+    
     String _type = "";
     /**
      * Constructor for ExportFilter.
@@ -41,6 +42,8 @@ public class ExportFilter extends FileFilter {
         String ext = getExtension(f);
         if (_type.equals(RTF))
             return ext.equals("rtf");
+        else if (_type.equals(ICS))
+        	return ext.equals("ics");
         else if (_type.equals(ZIP))
             return ext.equals("zip");
         else if (_type.equals(XHTML))
@@ -54,6 +57,8 @@ public class ExportFilter extends FileFilter {
     public String getDescription() {
         if (_type.equals(RTF))
             return "Rich Text Format (*.rtf)";
+        else if (_type.equals(ICS))
+        	return "iCalendar files (*.ics)";
         else if (_type.equals(ZIP))
             return "ZIP archives (*.zip)";
         else if (_type.equals(XHTML))
