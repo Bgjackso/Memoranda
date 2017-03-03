@@ -22,8 +22,11 @@ import net.sf.memoranda.util.Local;
 public class ProjectsTablePanel extends JPanel {
     BorderLayout borderLayout1 = new BorderLayout();
     JScrollPane scrollPane = new JScrollPane();
+    
     public JTable projectsTable = new JTable() {
+    	
         public TableCellRenderer getCellRenderer(int row, int column) {
+        	
             if (((String) getModel().getValueAt(row, PROJECT_ID)).equals(CurrentProject.get().getID())) {
                 return new javax.swing.table.DefaultTableCellRenderer() {
                     public Component getTableCellRendererComponent(
