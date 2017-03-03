@@ -32,6 +32,7 @@ public class AllFilesFilter extends FileFilter {
     public static final String JAR = "JAR";
     public static final String ICO = "ICO";
     public static final String WAV = "WAV";
+    public static final String ICS = "ICS";
 
     String _type = "";
     /**
@@ -51,6 +52,8 @@ public class AllFilesFilter extends FileFilter {
         String ext = getExtension(f);
         if (_type.equals(RTF))
             return ext.equals("rtf");
+        else if (_type.equals(ICS))
+        	return ext.equals("ics");
         else if (_type.equals(ZIP))
             return ext.equals("zip");
         else if (_type.equals(EXE))
@@ -74,6 +77,8 @@ public class AllFilesFilter extends FileFilter {
             return "Rich Text Format (*.rtf)";
         else if (_type.equals(ZIP))
             return "ZIP archives (*.zip)";
+        else if (_type.equals(ICS))
+        	return "iCalendar files (*.ics)";
         else if (_type.equals(EXE))
             return Local.getString("Executable Files") + " (*.exe, *.com, *.bat)";
         else if (_type.equals(JAR))

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.Vector;
@@ -41,9 +42,11 @@ import net.sf.memoranda.util.Local;
  */
 
 /*$Id: JNCalendarPanel.java,v 1.9 2004/04/05 10:05:44 alexeya Exp $*/
+@SuppressWarnings("unused")
 public class JNCalendarPanel extends JPanel {
 
-  CalendarDate _date = CurrentDate.get();
+	private static final long serialVersionUID = 1L;
+CalendarDate _date = CurrentDate.get();
   JToolBar navigationBar = new JToolBar();
   JPanel mntyPanel = new JPanel(new BorderLayout());
   JPanel navbPanel = new JPanel(new BorderLayout());
@@ -53,17 +56,21 @@ public class JNCalendarPanel extends JPanel {
   JPanel todayBPanel = new JPanel();
   JPanel dayBackBPanel = new JPanel();
   JButton dayBackB = new JButton();
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   JComboBox monthsCB = new JComboBox(Local.getMonthNames());
   BorderLayout borderLayout4 = new BorderLayout();
   JNCalendar jnCalendar = new JNCalendar(CurrentDate.get());
   JPanel jnCalendarPanel = new JPanel();
   BorderLayout borderLayout5 = new BorderLayout();
-  JSpinner yearSpin = new JSpinner(new SpinnerNumberModel(jnCalendar.get().getYear(), 1980, 2999, 1));
-  JSpinner.NumberEditor yearSpinner = new JSpinner.NumberEditor(yearSpin, "####");
+  //JSpinner yearSpin = new JSpinner(new SpinnerNumberModel(jnCalendar.get().getYear(), 1980, 2999, 1));
+  //JSpinner.NumberEditor yearSpinner = new JSpinner.NumberEditor(yearSpin, "####");
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  JComboBox yearCB = new JComboBox(Local.getYears());
 
   boolean ignoreChange = false;
 
-  private Vector selectionListeners = new Vector();
+  @SuppressWarnings("rawtypes")
+private Vector selectionListeners = new Vector();
 
   Border border1;
   Border border2;
@@ -81,7 +88,8 @@ public class JNCalendarPanel extends JPanel {
         new AbstractAction(
             "Go one day back",
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/back16.png"))) {
-        public void actionPerformed(ActionEvent e) {
+
+		public void actionPerformed(ActionEvent e) {
             dayBackB_actionPerformed(e);
         }
   };
@@ -90,7 +98,12 @@ public class JNCalendarPanel extends JPanel {
         new AbstractAction(
             "Go one day forward",
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/forward16.png"))) {
-        public void actionPerformed(ActionEvent e) {
+        /**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+		public void actionPerformed(ActionEvent e) {
             dayForwardB_actionPerformed(e);
         }
   };
@@ -160,14 +173,17 @@ public class JNCalendarPanel extends JPanel {
     dayBackB.setText("");
     dayBackB.setToolTipText(Local.getString("One day back"));
     
-    yearSpin.setPreferredSize(new Dimension(70, 20));
-    yearSpin.setRequestFocusEnabled(false);
-        yearSpin.setEditor(yearSpinner);
+    //yearSpin.setPreferredSize(new Dimension(70, 20));
+    //yearSpin.setRequestFocusEnabled(false);
+    //yearSpin.setEditor(yearSpinner);
+    yearCB.setRequestFocusEnabled(false);
+    yearCB.setMaximumRowCount(12);
+    yearCB.setPreferredSize(new Dimension(70 , 20));
     navbPanel.setMinimumSize(new Dimension(202, 30));
     navbPanel.setOpaque(false);
     navbPanel.setPreferredSize(new Dimension(155, 30));
-    jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 10));
-    jnCalendar.setFont(new java.awt.Font("Dialog", 0, 10));
+    jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 29)); //made day font larger
+    jnCalendar.setFont(new java.awt.Font("Dialog", 0, 13));
     jnCalendar.setGridColor(Color.lightGray);
     jnCalendarPanel.setLayout(borderLayout5);
     todayBPanel.setMinimumSize(new Dimension(68, 24));
@@ -183,9 +199,9 @@ public class JNCalendarPanel extends JPanel {
     dayForwardBPanel.add(dayForwardB, null);
     this.add(mntyPanel,  BorderLayout.SOUTH);
     mntyPanel.add(monthsCB, BorderLayout.CENTER);
-    mntyPanel.add(yearSpin,  BorderLayout.EAST);
+    mntyPanel.add(yearCB, BorderLayout.EAST);
     this.add(jnCalendarPanel,  BorderLayout.CENTER);
-    jnCalendar.getTableHeader().setPreferredSize(new Dimension(200, 15));
+    jnCalendar.getTableHeader().setPreferredSize(new Dimension(200, 40)); //edit here
     jnCalendarPanel.add(jnCalendar.getTableHeader(), BorderLayout.NORTH);
     jnCalendarPanel.add(jnCalendar, BorderLayout.CENTER);
     jnCalendar.addSelectionListener(new ActionListener()  {
@@ -206,12 +222,19 @@ public class JNCalendarPanel extends JPanel {
         monthsCB_actionPerformed(e);
       }
     });
+    yearCB.setFont(new java.awt.Font("Dialog", 0, 11));
 
-    yearSpin.addChangeListener(new ChangeListener() {
+    yearCB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        yearCB_actionPerformed(e);
+      }
+    });
+
+   /* yearSpin.addChangeListener(new ChangeListener() {
       public void stateChanged(ChangeEvent e) {
         yearSpin_actionPerformed();
       }
-    });
+    });*/
     CurrentProject.addProjectListener(new ProjectListener() {
             public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) {}
             public void projectWasChanged() {
@@ -221,7 +244,7 @@ public class JNCalendarPanel extends JPanel {
 
 
     refreshView();
-    yearSpin.setBorder(border2);
+   // yearSpin.setBorder(border2);
     
   }
 
@@ -234,12 +257,14 @@ public class JNCalendarPanel extends JPanel {
     return _date;
   }
 
-  public void addSelectionListener(ActionListener al) {
+  @SuppressWarnings("unchecked")
+public void addSelectionListener(ActionListener al) {
         selectionListeners.add(al);
     }
 
   private void notifyListeners() {
-        for (Enumeration en = selectionListeners.elements(); en.hasMoreElements();)
+        for (@SuppressWarnings("rawtypes")
+		Enumeration en = selectionListeners.elements(); en.hasMoreElements();)
              ((ActionListener) en.nextElement()).actionPerformed(new ActionEvent(this, 0, "Calendar event"));
   }
 
@@ -254,7 +279,8 @@ public class JNCalendarPanel extends JPanel {
     ignoreChange = true;
     jnCalendar.set(_date);
     monthsCB.setSelectedIndex(new Integer(_date.getMonth()));
-    yearSpin.setValue(new Integer(_date.getYear()));
+    yearCB.setSelectedItem(_date.getYear());
+   // yearspin.setValue(new Integer(_date.getYear()));
     ignoreChange = false;
   }
 
@@ -264,13 +290,20 @@ public class JNCalendarPanel extends JPanel {
     jnCalendar.set(_date);
     notifyListeners();
   }
+  
+  void yearCB_actionPerformed(ActionEvent e) {
+	    if (ignoreChange) return;
+	    _date = new CalendarDate(_date.getDay(), _date.getMonth(), (Integer)yearCB.getSelectedIndex());
+	    jnCalendar.set(_date);
+	    notifyListeners();
+	  }
 
-  void yearSpin_actionPerformed() {
+ /* void yearSpin_actionPerformed() {
     if (ignoreChange) return;
     _date = new CalendarDate(_date.getDay(), _date.getMonth(), ((Integer)yearSpin.getValue()).intValue());
     jnCalendar.set(_date);
     notifyListeners();
-  }
+  }*/
 
   void dayBackB_actionPerformed(ActionEvent e) {
     Calendar cal = _date.getCalendar();
