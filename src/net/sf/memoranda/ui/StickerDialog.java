@@ -56,8 +56,8 @@ public class StickerDialog extends JDialog {
 	JLabel jLabel1 = new JLabel();
 	JLabel jLabel2 = new JLabel();
 	JLabel jLabel3 = new JLabel();
-	JLabel jLabel4 = new JLabel();
-	GridLayout gridLayout1 = new GridLayout(5,2); //orig (6,2)
+	//JLabel jLabel4 = new JLabel();
+	GridLayout gridLayout1 = new GridLayout(4,2); //orig (6,2)
 
 	Border border1;
 	Border border2;
@@ -245,7 +245,7 @@ public class StickerDialog extends JDialog {
 		jPanel1.add(italicButton);
 		jPanel1.add(underlineButton);
 		jPanel1.add(unorderedListButton);
-		jPanel1.add(jLabel4);
+		//jPanel1.add(jLabel4);
 		//jPanel1.add(priorityList);
 		
 		if (Context.get("STICKER_COLOR") != null) {
