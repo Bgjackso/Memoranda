@@ -31,9 +31,7 @@ import nu.xom.ParentNode;
  */
 /*$Id: EventsManager.java,v 1.11 2004/10/06 16:00:11 ivanrise Exp $*/
 public class EventsManager {
-/*	public static final String NS_JNEVENTS =
-		"http://www.openmechanics.org/2003/jnotes-events-file";
-*/
+	
 	public static final int NO_REPEAT = 0;
 	public static final int REPEAT_DAILY = 1;
 	public static final int REPEAT_WEEKLY = 2;
@@ -110,6 +108,28 @@ public class EventsManager {
 		Collections.sort(v);
 		return v;
 	}
+	
+	public static Vector getAllEvents(){
+		Vector res = new Vector();
+		for(Object o: getRepeatableEvents()){
+			res.add(o);
+		}
+		Elements years = _root.getChildElements("year");
+		for(int i = 0;i<years.size();i++){
+			Year yr = new Year(years.get(i));
+			Vector months = yr.getMonths();
+			for(Object o: months){
+				Vector days = ((Month)o).getDays();
+				for(Object ob: days){
+					Elements events = ((Day)ob).getElement().getChildElements("event");
+					for(int j = 0;j<events.size();j++)
+						res.add(new EventImpl(events.get(i)));
+				}
+			}
+		}
+
+		return res;
+	}
 
 	public static Event createEvent(
 		CalendarDate date,
@@ -179,21 +199,13 @@ public class EventsManager {
 			// ignore this event if it's a 'only working days' event and today is weekend.
 			if(ev.getWorkingDays() && (date.getCalendar().get(Calendar.DAY_OF_WEEK) == 1 ||
 				date.getCalendar().get(Calendar.DAY_OF_WEEK) == 7)) continue;
-			// ---
-			/*
-			 * /if ( ((date.after(ev.getStartDate())) &&
-			 * (date.before(ev.getEndDate()))) ||
-			 * (date.equals(ev.getStartDate()))
-			 */
-			//System.out.println(date.inPeriod(ev.getStartDate(),
-			// ev.getEndDate()));
+			
 			if (date.inPeriod(ev.getStartDate(), ev.getEndDate())) {
 				if (ev.getRepeat() == REPEAT_DAILY) {
 					int n = date.getCalendar().get(Calendar.DAY_OF_YEAR);
 					int ns =
 						ev.getStartDate().getCalendar().get(
 							Calendar.DAY_OF_YEAR);
-					//System.out.println((n - ns) % ev.getPeriod());
 					if ((n - ns) % ev.getPeriod() == 0)
 						v.add(ev);
 				} else if (ev.getRepeat() == REPEAT_WEEKLY) {
