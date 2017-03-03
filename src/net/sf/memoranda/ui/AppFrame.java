@@ -143,7 +143,13 @@ public class AppFrame extends JFrame {
                 }
         };
     
+    // creating J menu items for Project options {
     JMenuItem jMenuFileNewPrj = new JMenuItem();
+    JMenuItem jMenuFileDeletePrj = new JMenuItem();
+    JMenuItem jMenuFilePropertiesPrj = new JMenuItem();
+    //JMenuItem jMenuFileOpenPrj = new JMenuItem();
+    // }
+    
         JMenuItem jMenuFileNewNote = new JMenuItem(workPanel.dailyItemsPanel.editorPanel.newAction);
     JMenuItem jMenuFilePackPrj = new JMenuItem(prjPackAction);
     JMenuItem jMenuFileUnpackPrj = new JMenuItem(prjUnpackAction);
@@ -282,8 +288,7 @@ public class AppFrame extends JFrame {
         jMenuHelp.setText(Local.getString("Help"));
         
         jMenuHelpGuide.setText(Local.getString("Online user's guide"));
-        jMenuHelpGuide.setIcon(new ImageIcon(AppFrame.class.getResource(
-                "resources/icons/help.png")));
+        jMenuHelpGuide.setIcon(new ImageIcon(AppFrame.class.getResource("resources/icons/help.png")));
         jMenuHelpGuide.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 jMenuHelpGuide_actionPerformed(e);
@@ -291,8 +296,7 @@ public class AppFrame extends JFrame {
         });
         
         jMenuHelpWeb.setText(Local.getString("Memoranda web site"));
-        jMenuHelpWeb.setIcon(new ImageIcon(AppFrame.class.getResource(
-                "resources/icons/web.png")));
+        jMenuHelpWeb.setIcon(new ImageIcon(AppFrame.class.getResource("resources/icons/web.png")));
         jMenuHelpWeb.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 jMenuHelpWeb_actionPerformed(e);
@@ -334,7 +338,13 @@ public class AppFrame extends JFrame {
          }
          });
          */
-        jMenuFileNewPrj.setAction(projectsPanel.newProjectAction);
+        
+        // Setting actions for each project option {
+        jMenuFileNewPrj.setAction(projectsPanel.newProjectAction); //<-- "new project" 
+        jMenuFilePropertiesPrj.setAction(projectsPanel.propertiesProjectAction);
+        jMenuFileDeletePrj.setAction(projectsPanel.deleteProjectAction);
+        //jMenuFileOpenPrj.setAction(projectsPanel.openProjectAction);
+        // }
 
         jMenuFileUnpackPrj.setText(Local.getString("Unpack project") + "...");
         jMenuFileExportNote.setText(Local.getString("Export current note")
@@ -450,7 +460,14 @@ public class AppFrame extends JFrame {
         jMenuInsertHR.setToolTipText(Local.getString("Insert Horizontal rule"));
 
         toolBar.add(jButton3);
+        
+        // File tab option for Project {
         jMenuFile.add(jMenuFileNewPrj);
+        jMenuFile.add(jMenuFileDeletePrj);
+        jMenuFile.add(jMenuFilePropertiesPrj);
+        //jMenuFile.add(jMenuFileOpenPrj);
+        // }
+        
                 jMenuFile.add(jMenuFileNewNote);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFilePackPrj);
