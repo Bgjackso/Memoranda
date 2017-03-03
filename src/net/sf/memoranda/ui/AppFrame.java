@@ -138,19 +138,19 @@ public class AppFrame extends JFrame {
     };
         
         public Action importNotesAction =
-                        new AbstractAction(Local.getString("Import multiple notes")) {
+                        new AbstractAction(Local.getString("Import note(s)")) {
 
                         public void actionPerformed(ActionEvent e) {
                                 ppImport_actionPerformed(e);
                         }
                 };
-        public Action importOneNoteAction =
+/*        public Action importOneNoteAction =
                 new AbstractAction(Local.getString("Import one note")) {
 
                 public void actionPerformed(ActionEvent e) {
                         p1Import_actionPerformed(e);
                 }
-        };
+        }; */
     
     JMenuItem jMenuFileNewPrj = new JMenuItem();
         JMenuItem jMenuFileNewNote = new JMenuItem(workPanel.dailyItemsPanel.editorPanel.newAction);
@@ -159,7 +159,7 @@ public class AppFrame extends JFrame {
     JMenuItem jMenuFileExportCalendar = new JMenuItem(exportCalendarAction);
     JMenuItem jMenuFileExportPrj = new JMenuItem(exportNotesAction);
     JMenuItem jMenuFileImportPrj = new JMenuItem(importNotesAction);
-    JMenuItem jMenuFileImportNote = new JMenuItem(importOneNoteAction);
+    //JMenuItem jMenuFileImportNote = new JMenuItem(importOneNoteAction);
     JMenuItem jMenuFileExportNote = new JMenuItem(
             workPanel.dailyItemsPanel.editorPanel.exportAction);
     JMenuItem jMenuFileMin = new JMenuItem(minimizeAction);
@@ -346,7 +346,7 @@ public class AppFrame extends JFrame {
          */
         jMenuFileNewPrj.setAction(projectsPanel.newProjectAction);
         jMenuFileExportCalendar.setText(Local.getString("Export Calendar"));
-        
+
         jMenuFilePackPrj.setText(Local.getString("Pack project") + "...");
         jMenuFileUnpackPrj.setText(Local.getString("Unpack project") + "...");
         
@@ -481,7 +481,7 @@ public class AppFrame extends JFrame {
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFileExportPrj);
         jMenuFile.add(jMenuFileExportNote);
-        jMenuFile.add(jMenuFileImportNote);
+        //jMenuFile.add(jMenuFileImportNote);
         jMenuFile.add(jMenuFileImportPrj);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuEditPref);
@@ -1039,7 +1039,9 @@ public class AppFrame extends JFrame {
                  ProjectExporter.export(CurrentProject.get(), chooser.getSelectedFile(), enc, xhtml, 
                                  dlg.splitChB.isSelected(), true, nument, dlg.titlesAsHeadersChB.isSelected(), false); 
                 }
+
             
+            //Imported note destination to be changed with other note fixes
             protected void ppImport_actionPerformed(ActionEvent e) {
             
             UIManager.put("FileChooser.lookInLabelText", Local
@@ -1065,7 +1067,7 @@ public class AppFrame extends JFrame {
 
             JFileChooser chooser = new JFileChooser();
             chooser.setFileHidingEnabled(false);
-            chooser.setDialogTitle(Local.getString("Import notes"));
+            chooser.setDialogTitle(Local.getString("Import note(s)"));
             chooser.setAcceptAllFileFilterUsed(false);
             chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 chooser.addChoosableFileFilter(new AllFilesFilter(AllFilesFilter.HTML));
@@ -1133,6 +1135,7 @@ public class AppFrame extends JFrame {
                     exc.printStackTrace();
             }
         }
+            //corresponding file > "import one note" option removed
             protected void p1Import_actionPerformed(ActionEvent e) {
                 
             UIManager.put("FileChooser.lookInLabelText", Local
@@ -1215,5 +1218,4 @@ public class AppFrame extends JFrame {
                     exc.printStackTrace();
             }
         }
-
 }

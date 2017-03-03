@@ -18,11 +18,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.SwingConstants;
 
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Configuration;
+import java.awt.Font;
 
 /**
  *  
@@ -105,6 +107,8 @@ public class JNCalendar extends JTable {
 		setCalendarParameters();
 		ignoreChange = true;
 		this.setModel(new JNCalendarModel());
+		setFont(new Font("Dialog", Font.BOLD,20));
+		
 		ignoreChange = false;
 		doSelection();
 	}
@@ -136,14 +140,20 @@ public class JNCalendar extends JTable {
 		 * CalendarDate(new Integer(d.toString()).intValue(), _date.getMonth(),
 		 * _date.getYear()));
 		 */
-		if (d != null)
+		if (d != null) {
 			renderer.setDate(
-				new CalendarDate(
-					new Integer(d.toString()).intValue(),
-					_date.getMonth(),
-					_date.getYear()));
-		else
+					new CalendarDate(
+							new Integer(d.toString()).intValue(),
+							_date.getMonth(),
+							_date.getYear()));
+			renderer.setHorizontalAlignment(SwingConstants.LEFT);
+			renderer.setVerticalTextPosition(SwingConstants.TOP);
+			renderer.setVerticalAlignment(SwingConstants.TOP);
+
+		} else {
 			renderer.setDate(null);
+			
+		}
 		return renderer;
 	}
 
@@ -153,6 +163,7 @@ public class JNCalendar extends JTable {
 		int selCol = getCol(_date.getDay());
 		this.setRowSelectionInterval(selRow, selRow);
 		this.setColumnSelectionInterval(selCol, selCol);
+		this.setRowHeight(90); //adjust height of rows as they are created
 		ignoreChange = false;
 	}
 
