@@ -65,8 +65,6 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 			}
         }		
 
-
-		label.setHorizontalTextPosition(2);
 		label.setEnabled(true);
 		
 
@@ -97,7 +95,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 		
 		else if(currentPanel.equals("EVENTS") && 
 		(!(EventsManager.getEventsForDate(d).isEmpty()))) 
-					label.setBackground(new Color(255,230,230));
+					label.setBackground(new Color(255,255,255)); //adjust odd color placements in events calendar
 		
 		else if(!isSelected)
 			label.setBackground(Color.WHITE);
