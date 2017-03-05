@@ -2,7 +2,6 @@ language: java
 jdk: oraclejdk8
 
 script:
-
-  ant compile
-  ant finbugs
-  ant checkstyle
+  -ant compile
+  -ant finbugs
+  -ant checkstyle
