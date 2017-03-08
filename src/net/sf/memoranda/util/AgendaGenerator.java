@@ -383,9 +383,9 @@ public class AgendaGenerator {
 		 		+ "<tr>" //<td  class=\"button\"><a href=\"memoranda:importstickers\"><b>"
 		 				//+Local.getString("Import file")+"</b></a></td>"
 						+ "<td class=\"button\"><a href=\"memoranda:exportstickerst\"><b>"
-				 +Local.getString("Export Sticker as .txt")+"</b></a><td class=\"button\"><a href=\"memoranda:exportstickersh\" style:\"margin:-10em; padding:4px; display:inline-block;\"><b>"
+				 +Local.getString("Export Sticker as .txt")+"</b></a><td class=\"button\"><a href=\"memoranda:exportstickersh\" style:\"width:100%; height:100%; padding:4px; display:inline-block;\"><b>"
 				+Local.getString("Export Sticker as html")+"</b></a></td></tr></table>"
-				 +   "<table border=\"0\" width=\"100%\"><tr><td class=\"button\"><a href=\"memoranda:addsticker\" style:\"margin:-10em; padding:4px; display:inline-block;\"><img align=\"left\" width=\"22\" height=\"22\" src=\""				
+				 +   "<table border=\"0\" width=\"100%\"><tr><td class=\"button\"><a href=\"memoranda:addsticker\" style:\"width:100%; height:100%; padding:4px; display:inline-block;\"><img align=\"left\" width=\"22\" height=\"22\" src=\""				
 				 + iurl
 				+ "\" border=\"0\"  hspace=\"0\" vspace=\"0\" alt=\"New sticker\"></a></td><td width=\"100%\"><a href=\"memoranda:addsticker\"><b>&nbsp;"
 				+Local.getString("Add sticker")+"</b></a></td></tr></table>";
