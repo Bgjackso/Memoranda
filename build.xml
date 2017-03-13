@@ -185,7 +185,7 @@
 			<java classname="${main.class}" fork="true">
 				<classpath refid="classpath"/>
 			</java>
-		<!--		
+		<!--	
 			<java jar="${build.dir}/${jarname}" fork="yes">
 				<classpath refid="classpath"/>
 			</java> -->
