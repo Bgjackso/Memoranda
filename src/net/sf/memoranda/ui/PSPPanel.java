@@ -49,6 +49,7 @@ public class PSPPanel extends JPanel {
 	public PSPPanel(DailyItemsPanel _parentPanel){
 		try {
 			parentPanel = _parentPanel;
+			jbInit();
 		} catch (Exception ex) {
 			new ExceptionDialog(ex);
 		}
