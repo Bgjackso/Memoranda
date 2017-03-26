@@ -1,7 +1,6 @@
 Project SER316
 
-[![Build Status](https://travis-ci.org/ser316asu/SER316-Hamburg.svg?branch=master)]
-https://travis-ci.org/ser316asu/SER316-Hamburg)
+[![Build Status](https://travis-ci.org/ser316asu/SER316-Hamburg.svg?branch=master)](https://travis-ci.org/ser316asu/SER316-Hamburg)
 
 
 # spring17project
