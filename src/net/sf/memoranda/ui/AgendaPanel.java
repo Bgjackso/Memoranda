@@ -21,6 +21,7 @@ import javax.swing.event.HyperlinkListener;
 import javax.swing.JOptionPane;
 
 import net.sf.memoranda.CurrentProject;
+import net.sf.memoranda.DefectList;
 import net.sf.memoranda.EventNotificationListener;
 import net.sf.memoranda.EventsManager;
 import net.sf.memoranda.EventsScheduler;
@@ -252,7 +253,8 @@ public class AgendaPanel extends JPanel {
 					Project prj,
 					NoteList nl,
 					TaskList tl,
-					ResourcesList rl) {
+					ResourcesList rl,
+					DefectList dl) {
 			}
 
 			public void projectWasChanged() {

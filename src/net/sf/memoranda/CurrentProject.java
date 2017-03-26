@@ -28,6 +28,7 @@ public class CurrentProject {
     private static TaskList _tasklist = null;
     private static NoteList _notelist = null;
     private static ResourcesList _resources = null;
+    private static DefectList _defects = null;
     private static Vector projectListeners = new Vector();
 
         
@@ -52,6 +53,7 @@ public class CurrentProject {
 		
         _tasklist = CurrentStorage.get().openTaskList(_project);
         _notelist = CurrentStorage.get().openNoteList(_project);
+        _defects = CurrentStorage.get().openDefectList(_project);
         _resources = CurrentStorage.get().openResourcesList(_project);
         AppFrame.addExitListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -75,6 +77,11 @@ public class CurrentProject {
     
     public static ResourcesList getResourcesList() {
             return _resources;
+    }
+    
+    public static DefectList getDefectList()
+    {
+    	return _defects;
     }
 
     public static void set(Project project) {
@@ -101,7 +108,7 @@ public class CurrentProject {
 
     private static void notifyListenersBefore(Project project, NoteList nl, TaskList tl, ResourcesList rl) {
         for (int i = 0; i < projectListeners.size(); i++) {
-            ((ProjectListener)projectListeners.get(i)).projectChange(project, nl, tl, rl);
+            ((ProjectListener)projectListeners.get(i)).projectChange(project, nl, tl, rl, _defects);
             /*DEBUGSystem.out.println(projectListeners.get(i));*/
         }
     }

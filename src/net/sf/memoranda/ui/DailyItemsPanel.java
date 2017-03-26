@@ -24,6 +24,7 @@ import javax.swing.border.Border;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.CurrentNote;
+import net.sf.memoranda.DefectList;
 import net.sf.memoranda.NoteListener;
 import net.sf.memoranda.EventNotificationListener;
 import net.sf.memoranda.EventsScheduler;
@@ -230,7 +231,7 @@ public class DailyItemsPanel extends JPanel {
         });
 
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) {
+            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl) {
 //            	Util.debug("DailyItemsPanel Project Listener: Project is going to be changed!");				
 //            	Util.debug("current project is " + CurrentProject.get().getTitle());
 
