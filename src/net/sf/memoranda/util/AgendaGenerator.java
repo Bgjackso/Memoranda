@@ -379,11 +379,13 @@ public class AgendaGenerator {
 				.class
 				.getResource("resources/agenda/removesticker.gif")
 				.toExternalForm();
-		 String s = "<hr><hr><table border=\"0\" cellpadding=\"4px\" width=\"100%\"><tr><td  class=\"button\"><a href=\"memoranda:importstickers\"><b>"
-				+Local.getString("Import file")+"</b></a></td><td class=\"button\"><a href=\"memoranda:exportstickerst\"><b>"
-				 +Local.getString("Export as .txt")+"</b></a><td  class=\"button\"><a href=\"memoranda:exportstickersh\"><b>"
-				+Local.getString("Export as html")+"</b></a></td></tr></table>"
-				 +   "<table border=\"0\" cellpadding=\"4px\" width=\"100%\"><tr><td><a href=\"memoranda:addsticker\"><img align=\"left\" width=\"22\" height=\"22\" src=\""				
+		 String s = "<hr><hr><table border=\"0\" width=\"100%\">"
+		 		+ "<tr>" //<td  class=\"button\"><a href=\"memoranda:importstickers\"><b>"
+		 				//+Local.getString("Import file")+"</b></a></td>"
+						+ "<td class=\"button\"><a href=\"memoranda:exportstickerst\"><b>"
+				 +Local.getString("Export Sticker as .txt")+"</b></a><td class=\"button\"><a href=\"memoranda:exportstickersh\" style:\"width:100%; height:100%; padding:4px; display:inline-block;\"><b>"
+				+Local.getString("Export Sticker as html")+"</b></a></td></tr></table>"
+				 +   "<table border=\"0\" width=\"100%\"><tr><td class=\"button\"><a href=\"memoranda:addsticker\" style:\"width:100%; height:100%; padding:4px; display:inline-block;\"><img align=\"left\" width=\"22\" height=\"22\" src=\""				
 				 + iurl
 				+ "\" border=\"0\"  hspace=\"0\" vspace=\"0\" alt=\"New sticker\"></a></td><td width=\"100%\"><a href=\"memoranda:addsticker\"><b>&nbsp;"
 				+Local.getString("Add sticker")+"</b></a></td></tr></table>";
@@ -395,7 +397,7 @@ public class AgendaGenerator {
             s += "\n<table border=\"0\" cellpadding=\"0\" width=\"100%\"><table width=\"100%\"><tr><td bgcolor=\"#E0E0E0\"><a href=\"memoranda:editsticker#"
             		+id+"\">"+Local.getString("EDIT")+"</a></td><td bgcolor=\"#E0E0E0\" width=\"70%\"><a href=\"memoranda:expandsticker#"
             		+id+"\">"+Local.getString("OPEN IN A NEW WINDOW")+"</></td><td bgcolor=\"#E0E0E0\" align=\"right\">" 
-            		+ "&nbsp;" + // without this removesticker link takes klicks from whole cell
+            		+ "&nbsp;" + // without this removesticker link takes clicks from whole cell
                       "<a href=\"memoranda:removesticker#"+id+"\"><img align=\"left\" width=\"14\" height=\"14\" src=\""
                     + iurl2
                     + "\" border=\"0\"  hspace=\"0\" vspace=\"0\" alt=\"Remove sticker\"></a></td></table></tr><tr><td>"
