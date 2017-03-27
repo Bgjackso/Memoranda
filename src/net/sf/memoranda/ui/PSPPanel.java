@@ -41,26 +41,62 @@ import nu.xom.Element;
 
 public class PSPPanel extends JPanel {
 	BorderLayout borderLayout = new BorderLayout();
+	
 	JToolBar toolBar = new JToolBar();
+	JButton historyBackB = new JButton();
+	JButton historyForwardB = new JButton();
+	
 	JScrollPane scrollPane = new JScrollPane();
+	
 	DailyItemsPanel parentPanel = null;
 	
 	
+	// Things inside the panel that people need to see!
 	public PSPPanel(DailyItemsPanel _parentPanel){
 		try {
-			parentPanel = _parentPanel;
+			parentPanel = _parentPanel; // Parent panel is the date/info on top of the panel.
 			jbInit();
 		} catch (Exception ex) {
 			new ExceptionDialog(ex);
 		}
 	}
 	
+	// inside the panel
 	void jbInit() throws Exception {
 		toolBar.setFloatable(false);
 		this.setLayout(borderLayout);
-		this.add(scrollPane, BorderLayout.CENTER);
-		this.add(toolBar, BorderLayout.NORTH);
+		
 		scrollPane.getViewport().setBackground(Color.white);
+		//scrollPane.getViewport().add(viewer, null);
+		this.add(scrollPane, BorderLayout.CENTER);
+		
+		// Back button to go back one day previous to current date
+		historyBackB.setAction(History.historyBackAction);
+		historyBackB.setFocusable(false);
+		historyBackB.setBorderPainted(false);
+		historyBackB.setToolTipText(Local.getString("History back"));
+		historyBackB.setRequestFocusEnabled(false);
+		historyBackB.setPreferredSize(new Dimension(24, 24));
+		historyBackB.setMinimumSize(new Dimension(24, 24));
+		historyBackB.setMaximumSize(new Dimension(24, 24));
+		historyBackB.setText("");
+
+		// Forward button to go forward one day from the current date. 
+		historyForwardB.setAction(History.historyForwardAction);
+		historyForwardB.setBorderPainted(false);
+		historyForwardB.setFocusable(false);
+		historyForwardB.setPreferredSize(new Dimension(24, 24));
+		historyForwardB.setRequestFocusEnabled(false);
+		historyForwardB.setToolTipText(Local.getString("History forward"));
+		historyForwardB.setMinimumSize(new Dimension(24, 24));
+		historyForwardB.setMaximumSize(new Dimension(24, 24));
+		historyForwardB.setText("");
+		
+		// Adding the buttons to the toolbar and adding the tools bar
+		toolBar.add(historyBackB, null);
+		toolBar.add(historyForwardB, null);
+		this.add(toolBar, BorderLayout.NORTH);
+		
 	}
 		
 		
