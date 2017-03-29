@@ -89,11 +89,13 @@ public class CurrentProject {
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
         ResourcesList newresources = CurrentStorage.get().openResourcesList(project);
+        DefectList newdefects = CurrentStorage.get().openDefectList(project);
         notifyListenersBefore(project, newnotelist, newtasklist, newresources);
         _project = project;
         _tasklist = newtasklist;
         _notelist = newnotelist;
         _resources = newresources;
+        _defects = newdefects;
         notifyListenersAfter();
         Context.put("LAST_OPENED_PROJECT_ID", project.getID());
     }
@@ -125,6 +127,7 @@ public class CurrentProject {
         storage.storeNoteList(_notelist, _project);
         storage.storeTaskList(_tasklist, _project); 
         storage.storeResourcesList(_resources, _project);
+        storage.storeDefectList(_defects, _project);
         storage.storeProjectManager();
     }
     
@@ -133,5 +136,6 @@ public class CurrentProject {
         _tasklist = null;
         _notelist = null;
         _resources = null;
+        _defects = null;
     }
 }

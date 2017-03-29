@@ -312,48 +312,4 @@ public class AgendaPanel extends JPanel {
 		isActive = isa;
 	}
 
-	//	void toggleShowActiveOnly_actionPerformed(ActionEvent e) {
-	//		Context.put(
-	//			"SHOW_ACTIVE_TASKS_ONLY",
-	//			new Boolean(ppShowActiveOnlyChB.isSelected()));
-	//		/*if (taskTable.isShowActiveOnly()) {
-	//			// is true, toggle to false
-	//			taskTable.setShowActiveOnly(false);
-	//			//showActiveOnly.setToolTipText(Local.getString("Show Active Only"));			
-	//		}
-	//		else {
-	//			// is false, toggle to true
-	//			taskTable.setShowActiveOnly(true);
-	//			showActiveOnly.setToolTipText(Local.getString("Show All"));			
-	//		}*/	    
-	//		refresh(CurrentDate.get());
-	////		parentPanel.updateIndicators();
-	//		//taskTable.updateUI();
-	//	}
-
-	//    class PopupListener extends MouseAdapter {
-	//
-	//        public void mouseClicked(MouseEvent e) {
-	//        	System.out.println("mouse clicked!");
-	////			if ((e.getClickCount() == 2) && (taskTable.getSelectedRow() > -1))
-	////				editTaskB_actionPerformed(null);
-	//		}
-	//
-	//		public void mousePressed(MouseEvent e) {
-	//        	System.out.println("mouse pressed!");
-	//			maybeShowPopup(e);
-	//		}
-	//
-	//		public void mouseReleased(MouseEvent e) {
-	//        	System.out.println("mouse released!");
-	//			maybeShowPopup(e);
-	//		}
-	//
-	//		private void maybeShowPopup(MouseEvent e) {
-	//			if (e.isPopupTrigger()) {
-	//				agendaPPMenu.show(e.getComponent(), e.getX(), e.getY());
-	//			}
-	//		}
-	//
-	//    }
 }

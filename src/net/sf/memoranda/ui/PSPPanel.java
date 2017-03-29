@@ -1,78 +1,79 @@
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.JOptionPane;
+
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Defect;
 import net.sf.memoranda.DefectList;
+import net.sf.memoranda.EventNotificationListener;
+import net.sf.memoranda.EventsManager;
+import net.sf.memoranda.EventsScheduler;
+import net.sf.memoranda.History;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
+import net.sf.memoranda.ProjectManager;
 import net.sf.memoranda.ResourcesList;
 import net.sf.memoranda.TaskList;
-
 import net.sf.memoranda.date.CalendarDate;
+import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.date.DateListener;
+import net.sf.memoranda.ui.DefectPanel;
+import net.sf.memoranda.ui.DefectPanel.DefectsTableModel;
+import net.sf.memoranda.util.AgendaGenerator;
+import net.sf.memoranda.util.CurrentStorage;
+import net.sf.memoranda.util.Local;
+import net.sf.memoranda.util.Util;
+import nu.xom.Element;
 
 public class PSPPanel extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	BorderLayout borderLayout = new BorderLayout();
 
-	/*BorderLayout borderLayout = new BorderLayout();
 	JToolBar toolBar = new JToolBar();
+	JButton historyBackB = new JButton();
+	JButton historyForwardB = new JButton();
+	JButton addRowBtn = new JButton("Add Row");
+	JButton deleteBtn = new JButton("Delete");
+
 	JScrollPane scrollPane = new JScrollPane();
+
 	DailyItemsPanel parentPanel = null;
-	DefectTable table1 = null;
-
-
-	public PSPPanel(DailyItemsPanel _parentPanel){
-		try {
-			parentPanel = _parentPanel;
-			jbInit();
-		} catch (Exception ex) {
-			new ExceptionDialog(ex);
-		}
-	}
-
-	public PSPPanel(DefectTable _table1){
-		try {
-			table1 = _table1;
-			jbInit();
-		} catch (Exception ex) {
-			new ExceptionDialog(ex);
-		}
-	}
-
-	void jbInit() throws Exception {
-		toolBar.setFloatable(false);
-		this.setLayout(borderLayout);
-		this.add(scrollPane, BorderLayout.CENTER);
-		this.add(toolBar, BorderLayout.NORTH);
-		scrollPane.getViewport().setBackground(Color.white);
-
-	}
-
-
-}*/
+	
 	/**
 	 * Defect Log Table Model
 	 */
-	private class DefectsTableModel extends AbstractTableModel {
+	public class DefectsTableModel extends AbstractTableModel {
 		/**
 		 * 
 		 */
@@ -216,7 +217,7 @@ public class PSPPanel extends JPanel {
 		/**
 		 * Creates table with existing defects
 		 */
-		private void populateTable()
+		protected void populateTable()
 		{
 			_data.clear();
 			Vector<Defect> defects = CurrentProject.getDefectList().getAllDefect();
@@ -236,33 +237,65 @@ public class PSPPanel extends JPanel {
 				{
 					_nextNumber = defects.get(i).GetDefectNumber() + 1;
 				}
-
 			}
 			fireTableDataChanged();
 		}
-	} 
-
-	public PSPPanel(DailyItemsPanel _parentPanel) {
+	}
+	
+	// Things inside the panel that people need to see!
+	public PSPPanel(DailyItemsPanel _parentPanel){
 		try {
-			init();
+			parentPanel = _parentPanel; // Parent panel is the date/info on top of the panel.			
+			jbInit();	
 		} catch (Exception ex) {
 			new ExceptionDialog(ex);
-			ex.printStackTrace();
 		}
 	}
 
-	/**
-	 * Initializes the UI
-	 */
-	private void init() throws Exception {
+	// inside the panel
+	void jbInit() throws Exception {
+		toolBar.setFloatable(false);
+		this.setLayout(borderLayout);
+
+		scrollPane.getViewport().setBackground(Color.white);
+		this.add(scrollPane, BorderLayout.CENTER);
+		
+		// Back button to go back one day previous to current date
+		historyBackB.setAction(History.historyBackAction);
+		historyBackB.setFocusable(false);
+		historyBackB.setBorderPainted(false);
+		historyBackB.setToolTipText(Local.getString("History back"));
+		historyBackB.setRequestFocusEnabled(false);
+		historyBackB.setPreferredSize(new Dimension(24, 24));
+		historyBackB.setMinimumSize(new Dimension(24, 24));
+		historyBackB.setMaximumSize(new Dimension(24, 24));
+		historyBackB.setText("");
+
+		// Forward button to go forward one day from the current date. 
+		historyForwardB.setAction(History.historyForwardAction);
+		historyForwardB.setBorderPainted(false);
+		historyForwardB.setFocusable(false);
+		historyForwardB.setPreferredSize(new Dimension(24, 24));
+		historyForwardB.setRequestFocusEnabled(false);
+		historyForwardB.setToolTipText(Local.getString("History forward"));
+		historyForwardB.setMinimumSize(new Dimension(24, 24));
+		historyForwardB.setMaximumSize(new Dimension(24, 24));
+		historyForwardB.setText("");
+		
+		// Adding the buttons to the toolbar and adding the tools bar
+		toolBar.add(historyBackB, null);
+		toolBar.add(historyForwardB, null);
+		toolBar.add(addRowBtn);
+		toolBar.add(deleteBtn);
+		this.add(toolBar, BorderLayout.NORTH);
+		
+	
 		DefectsTableModel tableModel = new DefectsTableModel();
 		JTable table = new JTable(tableModel);
-		JScrollPane scrollPane = new JScrollPane(table);
-		JButton addRowBtn = new JButton("Add Row");
-		JButton deleteBtn = new JButton("Delete");
-		JPanel btnPanel = new JPanel();
-
+		JScrollPane scrollPane2 = new JScrollPane(table);
+		
 		// Table Size
+	
 		table.getColumnModel().getColumn(0).setPreferredWidth(20*1000);		
 		table.getColumnModel().getColumn(1).setPreferredWidth(50*1000);
 		table.getColumnModel().getColumn(2).setPreferredWidth(65*1000);
@@ -271,7 +304,7 @@ public class PSPPanel extends JPanel {
 		table.getColumnModel().getColumn(5).setPreferredWidth(20*1000);
 		table.getColumnModel().getColumn(6).setPreferredWidth(200*1000);
 
-		TableColumn typeCol = table.getColumnModel().getColumn(2);
+		TableColumn typeCol = table.getColumnModel().getColumn(2); 
 		TableColumn injectCol = table.getColumnModel().getColumn(3);
 		TableColumn correctCol = table.getColumnModel().getColumn(4);
 
@@ -310,14 +343,7 @@ public class PSPPanel extends JPanel {
 		injectCol.setCellEditor(new DefaultCellEditor(injectBox));
 		correctCol.setCellEditor(new DefaultCellEditor(correctBox));
 
-		this.setLayout(new BorderLayout());
-		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
-
-		btnPanel.add(addRowBtn);
-		btnPanel.add(deleteBtn);
-
-		this.add(btnPanel, BorderLayout.NORTH);
-		this.add(scrollPane, BorderLayout.CENTER);
+		this.add(scrollPane2, BorderLayout.CENTER);
 
 		table.setFillsViewportHeight(true);
 		tableModel.populateTable();
@@ -335,8 +361,7 @@ public class PSPPanel extends JPanel {
 				tableModel.deleteRows(table.getSelectedRows());
 			}
 		});
-
-
+		
 		CurrentProject.addProjectListener(new ProjectListener() {
 			public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl) {                
 
@@ -344,6 +369,6 @@ public class PSPPanel extends JPanel {
 			public void projectWasChanged() {
 				tableModel.populateTable();
 			}
-		});
+		}); 
 	}
 }
