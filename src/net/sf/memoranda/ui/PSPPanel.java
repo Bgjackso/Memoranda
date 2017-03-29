@@ -59,7 +59,7 @@ public class PSPPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	BorderLayout borderLayout = new BorderLayout();
-
+  
 	JToolBar toolBar = new JToolBar();
 	JButton historyBackB = new JButton();
 	JButton historyForwardB = new JButton();
@@ -250,13 +250,12 @@ public class PSPPanel extends JPanel {
 		} catch (Exception ex) {
 			new ExceptionDialog(ex);
 		}
-	}
-
+  }
 	// inside the panel
 	void jbInit() throws Exception {
 		toolBar.setFloatable(false);
 		this.setLayout(borderLayout);
-
+    
 		scrollPane.getViewport().setBackground(Color.white);
 		this.add(scrollPane, BorderLayout.CENTER);
 		
@@ -287,8 +286,7 @@ public class PSPPanel extends JPanel {
 		toolBar.add(historyForwardB, null);
 		toolBar.add(addRowBtn);
 		toolBar.add(deleteBtn);
-		this.add(toolBar, BorderLayout.NORTH);
-		
+		this.add(toolBar, BorderLayout.NORTH);		
 	
 		DefectsTableModel tableModel = new DefectsTableModel();
 		JTable table = new JTable(tableModel);
