@@ -2,7 +2,10 @@ package net.sf.memoranda.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -11,12 +14,16 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+
+//import TimeFrame.starts;
+
 import javax.swing.JOptionPane;
 
 import net.sf.memoranda.CurrentProject;
@@ -25,6 +32,7 @@ import net.sf.memoranda.EventsManager;
 import net.sf.memoranda.EventsScheduler;
 import net.sf.memoranda.History;
 import net.sf.memoranda.NoteList;
+import net.sf.memoranda.PSPTimer;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ProjectManager;
@@ -50,6 +58,14 @@ public class PSPPanel extends JPanel {
 	
 	DailyItemsPanel parentPanel = null;
 	
+	//PSP Timer
+	JPanel timerPanel = new JPanel();
+	JLabel time = new JLabel("Press 'Start' to begin", JLabel.CENTER);
+    PSPTimer timer;
+    JButton pause = new JButton ("Pause");
+    JButton start = new JButton ("Start");
+    JButton reset = new JButton ("Reset");
+	
 	
 	// Things inside the panel that people need to see!
 	public PSPPanel(DailyItemsPanel _parentPanel){
@@ -63,14 +79,14 @@ public class PSPPanel extends JPanel {
 	
 	// inside the panel
 	void jbInit() throws Exception {
-		toolBar.setFloatable(false);
 		this.setLayout(borderLayout);
 		
 		scrollPane.getViewport().setBackground(Color.white);
 		//scrollPane.getViewport().add(viewer, null);
 		this.add(scrollPane, BorderLayout.CENTER);
+		toolBar.setFloatable(false);
 		
-		// Back button to go back one day previous to current date
+		// Back button to go back one day from current date
 		historyBackB.setAction(History.historyBackAction);
 		historyBackB.setFocusable(false);
 		historyBackB.setBorderPainted(false);
@@ -80,7 +96,7 @@ public class PSPPanel extends JPanel {
 		historyBackB.setMinimumSize(new Dimension(24, 24));
 		historyBackB.setMaximumSize(new Dimension(24, 24));
 		historyBackB.setText("");
-
+		
 		// Forward button to go forward one day from the current date. 
 		historyForwardB.setAction(History.historyForwardAction);
 		historyForwardB.setBorderPainted(false);
@@ -97,9 +113,21 @@ public class PSPPanel extends JPanel {
 		toolBar.add(historyForwardB, null);
 		this.add(toolBar, BorderLayout.NORTH);
 		
+		//PSP Timer
+		timer = new PSPTimer();
+        //start.addActionListener(new starts());
+        //pause.addActionListener(new starts());
+        //reset.addActionListener(new starts());
+        time.setBackground(Color.WHITE);
+        timerPanel.add(time);
+        time.setFont(new Font("Consolas", Font.BOLD, 20));
+        time.setForeground(Color.BLACK);
+        timerPanel.add(start);
+        timerPanel.add(pause);
+        timerPanel.add(reset);
+        this.add(timerPanel);
 	}
-		
-		
+	
 }
 
 
