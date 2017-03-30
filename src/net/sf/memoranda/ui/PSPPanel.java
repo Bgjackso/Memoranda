@@ -38,6 +38,12 @@ import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
 import nu.xom.Element;
+import java.awt.FlowLayout;
+import javax.swing.border.BevelBorder;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 
 public class PSPPanel extends JPanel {
 	BorderLayout borderLayout = new BorderLayout();
@@ -46,7 +52,10 @@ public class PSPPanel extends JPanel {
 	JButton historyBackB = new JButton();
 	JButton historyForwardB = new JButton();
 	
-	JScrollPane scrollPane = new JScrollPane();
+	// Lines of Code Panel stuff
+	JTextField locField = new JTextField(10);
+	JButton saveLOC = new JButton();
+	JPanel locPanel = new JPanel();
 	
 	DailyItemsPanel parentPanel = null;
 	
@@ -65,10 +74,6 @@ public class PSPPanel extends JPanel {
 	void jbInit() throws Exception {
 		toolBar.setFloatable(false);
 		this.setLayout(borderLayout);
-		
-		scrollPane.getViewport().setBackground(Color.white);
-		//scrollPane.getViewport().add(viewer, null);
-		this.add(scrollPane, BorderLayout.CENTER);
 		
 		// Back button to go back one day previous to current date
 		historyBackB.setAction(History.historyBackAction);
@@ -96,6 +101,10 @@ public class PSPPanel extends JPanel {
 		toolBar.add(historyBackB, null);
 		toolBar.add(historyForwardB, null);
 		this.add(toolBar, BorderLayout.NORTH);
+		
+		locPanel.add(locField);
+		locPanel.add(saveLOC);
+		this.add(locPanel);
 		
 	}
 		
