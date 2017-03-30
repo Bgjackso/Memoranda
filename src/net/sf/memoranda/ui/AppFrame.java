@@ -1,7 +1,7 @@
 package net.sf.memoranda.ui;
 
-import java.awt.Desktop; // new - B
-import java.net.URI;     // new - B
+import java.awt.Desktop; 
+import java.net.URI;    
 import java.net.URISyntaxException;
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
@@ -38,6 +38,7 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.text.html.HTMLDocument;
 
+import net.sf.memoranda.DefectList;
 import net.sf.memoranda.Event;
 import net.sf.memoranda.EventsScheduler;
 import net.sf.memoranda.util.ICalExporter;
@@ -671,7 +672,7 @@ public class AppFrame extends JFrame {
         CurrentProject.addProjectListener(new ProjectListener() {
 
             public void projectChange(Project prj, NoteList nl, TaskList tl,
-                    ResourcesList rl) {
+                    ResourcesList rl, DefectList dl) {
             }
 
             public void projectWasChanged() {
