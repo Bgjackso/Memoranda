@@ -27,6 +27,10 @@ import net.sf.memoranda.util.Local;
 /*$Id: WorkPanel.java,v 1.9 2004/04/05 10:05:44 alexeya Exp $*/
 public class WorkPanel extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	BorderLayout borderLayout1 = new BorderLayout();
 	JToolBar toolBar = new JToolBar();
 	JPanel panel = new JPanel();
@@ -40,6 +44,7 @@ public class WorkPanel extends JPanel {
 	public JButton eventsB = new JButton();
 	public JButton filesB = new JButton();
 	public JButton pspB = new JButton();
+	public JButton chartB = new JButton();
 	JButton currentB = null;
 	Border border1;
 
@@ -67,6 +72,9 @@ public class WorkPanel extends JPanel {
 			}
 			else if (pan.equals("PSP")) {
 				pspB_actionPerformed(null);
+			}
+			else if (pan.equals("CHART")) {
+				chartB_actionPerformed(null);
 			}
 		}
 	}
@@ -111,6 +119,13 @@ public class WorkPanel extends JPanel {
 		setCurrentButton(pspB);
 		Context.put("CURRENT_PANEL", "PSP");
 	}
+	
+	public void chartB_actionPerformed(ActionEvent e){
+		cardLayout1.show(panel, "DAILYITEMS");
+		dailyItemsPanel.selectPanel("CHART");
+		setCurrentButton(chartB);
+		Context.put("CURRENT_PANEL", "CHART");
+	}
 	 
 
 	void setCurrentButton(JButton cb) {
@@ -147,6 +162,7 @@ public class WorkPanel extends JPanel {
 		toolBar.add(notesB, null);
 		toolBar.add(filesB, null);
 		toolBar.add(pspB, null);
+		toolBar.add(chartB, null);
 		toolBar.setBorder(null);
 		
 		panel.setLayout(cardLayout1);
@@ -322,6 +338,32 @@ public class WorkPanel extends JPanel {
 		pspB.setSelected(true);
 		
 		
+		//chart panel
+
+		chartB.setBackground(Color.white);
+		chartB.setMaximumSize(new Dimension(60, 80));
+		chartB.setMinimumSize(new Dimension(30, 30));
+		chartB.setFont(new java.awt.Font("Dialog", 1, 10));
+		chartB.setPreferredSize(new Dimension(50, 50));
+		chartB.setBorderPainted(false);
+		chartB.setContentAreaFilled(false);
+		chartB.setFocusPainted(false);
+		chartB.setHorizontalTextPosition(SwingConstants.CENTER);
+		chartB.setText(Local.getString("Chart"));
+		chartB.setVerticalAlignment(SwingConstants.TOP);
+		chartB.setVerticalTextPosition(SwingConstants.BOTTOM);
+				
+		chartB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chartB_actionPerformed(e);
+			}
+		});
+				
+		chartB.setIcon(new ImageIcon(
+				net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/chartbtn.png")));
+		chartB.setOpaque(false);
+		chartB.setMargin(new Insets(0, 0, 0, 0));
+		chartB.setSelected(true);
 		
 	}
 
