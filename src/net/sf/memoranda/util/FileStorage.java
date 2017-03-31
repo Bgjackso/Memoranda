@@ -19,6 +19,8 @@ import java.net.URL;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import net.sf.memoranda.DefectList;
+import net.sf.memoranda.DefectListImpl;
 import net.sf.memoranda.EventsManager;
 import net.sf.memoranda.Note;
 import net.sf.memoranda.NoteList;
@@ -436,6 +438,34 @@ public class FileStorage implements Storage {
         saveDocument(
             rl.getXMLContent(),
             JN_DOCPATH + prj.getID() + File.separator + ".resources");
+    }
+    
+    public DefectList openDefectList(Project prj)
+    {
+    	String filename = JN_DOCPATH + prj.getID() + File.separator + ".defects";
+    	if (documentExists(filename))
+    	{
+    		System.out.println("[DEBUG] Open defects lists: " + filename);
+    		return new DefectListImpl(openDocument(filename), prj);
+    	}
+    	else
+    	{
+    		System.out.println("[DEBUG] New defect list created");
+    		return new DefectListImpl(prj);
+    	}
+    }
+    
+    public void storeDefectList(DefectList p_defectList, Project prj)
+    {
+    	System.out.println(
+    			"[DEBUG] Save Defects list: "
+    			+ JN_DOCPATH
+    			+ prj.getID()
+    			+ File.separator
+    			+ ".defects");
+    	saveDocument(
+    			p_defectList.getXMLContent(),
+    			JN_DOCPATH + prj.getID() + File.separator + ".defects");
     }
     /**
      * @see net.sf.memoranda.util.Storage#restoreContext()
