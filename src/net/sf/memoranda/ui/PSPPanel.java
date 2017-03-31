@@ -63,7 +63,7 @@ public class PSPPanel extends JPanel {
 	
 	DailyItemsPanel parentPanel = null;
 	private final JPanel panel = new JPanel();
-	private final JLabel lblLinesOfCode = new JLabel("Lines of Code");
+	private final JLabel lblLinesOfCode = new JLabel("Lines of Code: ");
 	
 	
 	// Things inside the panel that people need to see!

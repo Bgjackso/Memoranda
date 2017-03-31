@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import nu.xom.Document;
 
-public class LOCLog {
+public interface LOCLog {
 
 	Vector<LinesofCode> getAllLOC();
     
