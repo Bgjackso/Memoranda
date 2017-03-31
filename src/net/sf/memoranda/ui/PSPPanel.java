@@ -111,7 +111,7 @@ public class PSPPanel extends JPanel {
 		// Adding Lines of Code panel and buttons
 		locPanel.add(lblLinesOfCode);
 		locPanel.add(locField);
-		//saveLOC.addActionListener(e -> LinesofCode.locValue(locField));
+		//saveLOC.addActionListener(e -> LinesofCode.checkLOCValue(locField));
 			
 		locPanel.add(saveLOC);
 		this.add(locPanel, BorderLayout.CENTER);
