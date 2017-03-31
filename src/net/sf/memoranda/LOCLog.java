@@ -9,6 +9,6 @@ public class LOCLog {
 	 * 
 	 * get time
 	 * 
-	 * save to a project and all other places in a log list (another class?)
+	 * send to project?
 	 */
 }

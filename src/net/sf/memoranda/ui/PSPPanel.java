@@ -19,11 +19,13 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.JOptionPane;
 
+import net.sf.memoranda.LinesofCode;
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.EventNotificationListener;
 import net.sf.memoranda.EventsManager;
 import net.sf.memoranda.EventsScheduler;
 import net.sf.memoranda.History;
+import net.sf.memoranda.LinesofCode;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
@@ -44,6 +46,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class PSPPanel extends JPanel {
 	BorderLayout borderLayout = new BorderLayout();
@@ -54,10 +58,12 @@ public class PSPPanel extends JPanel {
 	
 	// Lines of Code Panel stuff
 	JTextField locField = new JTextField(10);
-	JButton saveLOC = new JButton();
+	JButton saveLOC = new JButton("Save");
 	JPanel locPanel = new JPanel();
 	
 	DailyItemsPanel parentPanel = null;
+	private final JPanel panel = new JPanel();
+	private final JLabel lblLinesOfCode = new JLabel("Lines of Code");
 	
 	
 	// Things inside the panel that people need to see!
@@ -97,14 +103,20 @@ public class PSPPanel extends JPanel {
 		historyForwardB.setMaximumSize(new Dimension(24, 24));
 		historyForwardB.setText("");
 		
-		// Adding the buttons to the toolbar and adding the tools bar
+		// Adding the buttons to the toolbar and adding the tool bar
 		toolBar.add(historyBackB, null);
 		toolBar.add(historyForwardB, null);
 		this.add(toolBar, BorderLayout.NORTH);
 		
+		// Adding Lines of Code panel and buttons
+		locPanel.add(lblLinesOfCode);
 		locPanel.add(locField);
+		//saveLOC.addActionListener(e -> LinesofCode.locValue(locField));
+			
 		locPanel.add(saveLOC);
-		this.add(locPanel);
+		this.add(locPanel, BorderLayout.CENTER);
+		
+		add(panel, BorderLayout.SOUTH);
 		
 	}
 		
