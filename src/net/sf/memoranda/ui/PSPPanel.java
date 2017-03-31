@@ -290,19 +290,7 @@ public class PSPPanel extends JPanel {
 
 		this.add(toolBar, BorderLayout.NORTH);
 		
-		//PSP Timer
-		timer = new PSPTimer();
-        //start.addActionListener(new starts());
-        //pause.addActionListener(new starts());
-        //reset.addActionListener(new starts());
-        time.setBackground(Color.WHITE);
-        timerPanel.add(time);
-        time.setFont(new Font("Consolas", Font.BOLD, 20));
-        time.setForeground(Color.BLACK);
-        timerPanel.add(start);
-        timerPanel.add(pause);
-        timerPanel.add(reset);
-        this.add(timerPanel);
+		//TIMER WAS HERE
 
 		toolBar.add(addRowBtn);
 		toolBar.add(deleteBtn);
@@ -389,5 +377,84 @@ public class PSPPanel extends JPanel {
 				tableModel.populateTable();
 			}
 		}); 
+		
+		//public PSPTimer()
+		JScrollPane scrollPane3 = new JScrollPane(timerPanel);
+		//timer = new PSPTimer();
+		//start.addActionListener(new starts()); //pertain to class below
+		//pause.addActionListener(new starts());
+		//reset.addActionListener(new starts());
+		time.setBackground(Color.WHITE);
+		timerPanel.add(time);
+		time.setFont(new Font("Consolas", Font.BOLD, 20));
+		time.setForeground(Color.BLACK);
+		timerPanel.add(start);
+		timerPanel.add(pause);
+		timerPanel.add(reset);
+		this.add(scrollPane3, borderLayout.SOUTH); //add scrollPane4 first when complete
+		//pull in 'time' lane
+		
 	}
+	
+	public class starts implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            if(event.getSource() == start){
+            	update(0);
+            	timer.startTimer();
+            }
+            else if (event.getSource() == pause){
+                timer.pauseTimer();
+            }else{
+            	update(0);
+            	timer.resetTimer(); 
+            }
+        }
+    }
+	
+	/*public void startTimer() {
+	      running = true;
+	      paused = false;
+	      //start thread
+	      runThread = new Thread(this);
+	      runThread.start();
+	      //update(0);
+	  }
+
+	  public void pauseTimer() {
+	      //pauses but is still able to restart
+	      paused = true;
+	  }
+
+	  public void resetTimer() { //can only be reset if timer is paused
+	      if (paused){
+	      	running = false;
+	          paused = false;
+	          summedTime = 0;
+	          //update(0);
+	      }
+	  }
+	  
+	  public void saveTime(){
+	  	//TODO
+	  }
+
+	  @Override
+	  public void run() {
+	      long startTime = System.currentTimeMillis();
+	      // keep showing the difference in time until we are either paused or not running anymore
+	      while(running && !paused) {
+	          //update(summedTime + (System.currentTimeMillis() - startTime)); //timer causing issues
+	      }
+	      if(paused){
+	      	summedTime += System.currentTimeMillis() - startTime;
+	      }else{
+	          summedTime = 0;
+	      }
+	  } */
+	
+	public void update(long dTime){
+    	time.setText(String.valueOf(String.valueOf((dTime/1000)/60) + ":" 
+    			+ String.valueOf((dTime/1000)%60) + ":" + String.valueOf((dTime)%1000)));
+	} 
+	
 }

@@ -1,5 +1,7 @@
 package net.sf.memoranda;
 
+import javax.swing.JLabel;
+
 import net.sf.memoranda.ui.PSPPanel;
 
 //PSPTimer
@@ -20,6 +22,7 @@ public class PSPTimer implements Runnable {
    * When thrown into memoranda, will be creating 
    * instance of JPanel instead of JFrame
    */
+  JLabel time = new JLabel();
   public static void main(String[] args) {
       /*TimeFrame t = new TimeFrame();
     //frame creation - panel goes here  
@@ -37,6 +40,7 @@ public class PSPTimer implements Runnable {
       //start thread
       runThread = new Thread(this);
       runThread.start();
+      //update(0);
   }
 
   public void pauseTimer() {
@@ -49,7 +53,7 @@ public class PSPTimer implements Runnable {
       	running = false;
           paused = false;
           summedTime = 0;
-          //PSPPanel.update(0);
+          //update(0);
       }
   }
   
@@ -62,7 +66,7 @@ public class PSPTimer implements Runnable {
       long startTime = System.currentTimeMillis();
       // keep showing the difference in time until we are either paused or not running anymore
       while(running && !paused) {
-          //timer.update(summedTime + (System.currentTimeMillis() - startTime)); //timer causing issues
+          //update(summedTime + (System.currentTimeMillis() - startTime)); //timer causing issues
       }
       if(paused){
       	summedTime += System.currentTimeMillis() - startTime;
@@ -70,4 +74,9 @@ public class PSPTimer implements Runnable {
           summedTime = 0;
       }
   }
+  public void update(long dTime){
+  	time.setText(String.valueOf(String.valueOf((dTime/1000)/60) + ":" 
+  			+ String.valueOf((dTime/1000)%60) + ":" + String.valueOf((dTime)%1000)));
+	}
+	
 }
