@@ -3,6 +3,8 @@ package net.sf.memoranda.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -12,11 +14,23 @@ import java.util.Vector;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+
+//import TimeFrame.starts;
+
+import javax.swing.JOptionPane;
+
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 
@@ -31,6 +45,7 @@ import net.sf.memoranda.Defect;
 import net.sf.memoranda.DefectList;
 import net.sf.memoranda.History;
 import net.sf.memoranda.NoteList;
+import net.sf.memoranda.PSPTimer;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ResourcesList;
@@ -55,6 +70,16 @@ public class PSPPanel extends JPanel {
 
 	DailyItemsPanel parentPanel = null;
 	
+
+	//PSP Timer
+	JPanel timerPanel = new JPanel();
+	JLabel time = new JLabel("Press 'Start' to begin", JLabel.CENTER);
+    PSPTimer timer;
+    JButton pause = new JButton ("Pause");
+    JButton start = new JButton ("Start");
+    JButton reset = new JButton ("Reset");
+	
+
 	/**
 	 * Defect Log Table Model
 	 */
@@ -226,6 +251,7 @@ public class PSPPanel extends JPanel {
 			fireTableDataChanged();
 		}
 	}
+
 	
 	// Things inside the panel that people need to see!
 	public PSPPanel(DailyItemsPanel _parentPanel){
@@ -237,14 +263,15 @@ public class PSPPanel extends JPanel {
 		}
   }
 	// inside the panel
+	@SuppressWarnings("unchecked")
 	void jbInit() throws Exception {
-		toolBar.setFloatable(false);
 		this.setLayout(borderLayout);
     
 		scrollPane.getViewport().setBackground(Color.white);
 		this.add(scrollPane, BorderLayout.CENTER);
+		toolBar.setFloatable(false);
 		
-		// Back button to go back one day previous to current date
+		// Back button to go back one day from current date
 		historyBackB.setAction(History.historyBackAction);
 		historyBackB.setFocusable(false);
 		historyBackB.setBorderPainted(false);
@@ -254,7 +281,7 @@ public class PSPPanel extends JPanel {
 		historyBackB.setMinimumSize(new Dimension(24, 24));
 		historyBackB.setMaximumSize(new Dimension(24, 24));
 		historyBackB.setText("");
-
+		
 		// Forward button to go forward one day from the current date. 
 		historyForwardB.setAction(History.historyForwardAction);
 		historyForwardB.setBorderPainted(false);
@@ -269,6 +296,11 @@ public class PSPPanel extends JPanel {
 		// Adding the buttons to the toolbar and adding the tools bar
 		toolBar.add(historyBackB, null);
 		toolBar.add(historyForwardB, null);
+
+		this.add(toolBar, BorderLayout.NORTH);
+		
+		//TIMER WAS HERE
+
 		toolBar.add(addRowBtn);
 		toolBar.add(deleteBtn);
 		this.add(toolBar, BorderLayout.NORTH);		
@@ -328,6 +360,7 @@ public class PSPPanel extends JPanel {
 
 		this.add(scrollPane2, BorderLayout.CENTER);
 
+
 		table.setFillsViewportHeight(true);
 		tableModel.populateTable();
 
@@ -354,6 +387,83 @@ public class PSPPanel extends JPanel {
 			}
 		}); 
 		
+		//public PSPTimer()
+		JScrollPane scrollPane3 = new JScrollPane(timerPanel);
+		//timer = new PSPTimer();
+		//start.addActionListener(new starts()); //pertain to class below
+		//pause.addActionListener(new starts());
+		//reset.addActionListener(new starts());
+		time.setBackground(Color.WHITE);
+		timerPanel.add(time);
+		time.setFont(new Font("Consolas", Font.BOLD, 20));
+		time.setForeground(Color.BLACK);
+		timerPanel.add(start);
+		timerPanel.add(pause);
+		timerPanel.add(reset);
+		this.add(scrollPane3, borderLayout.SOUTH); //add scrollPane4 first when complete
+		//pull in 'time' lane
+		
 	}
+	
+	public class starts implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            if(event.getSource() == start){
+            	update(0);
+            	timer.startTimer();
+            }
+            else if (event.getSource() == pause){
+                timer.pauseTimer();
+            }else{
+            	update(0);
+            	timer.resetTimer(); 
+            }
+        }
+    }
+	
+	/*public void startTimer() {
+	      running = true;
+	      paused = false;
+	      //start thread
+	      runThread = new Thread(this);
+	      runThread.start();
+	      //update(0);
+	  }
+
+	  public void pauseTimer() {
+	      //pauses but is still able to restart
+	      paused = true;
+	  }
+
+	  public void resetTimer() { //can only be reset if timer is paused
+	      if (paused){
+	      	running = false;
+	          paused = false;
+	          summedTime = 0;
+	          //update(0);
+	      }
+	  }
+	  
+	  public void saveTime(){
+	  	//TODO
+	  }
+
+	  @Override
+	  public void run() {
+	      long startTime = System.currentTimeMillis();
+	      // keep showing the difference in time until we are either paused or not running anymore
+	      while(running && !paused) {
+	          //update(summedTime + (System.currentTimeMillis() - startTime)); //timer causing issues
+	      }
+	      if(paused){
+	      	summedTime += System.currentTimeMillis() - startTime;
+	      }else{
+	          summedTime = 0;
+	      }
+	  } */
+	
+	public void update(long dTime){
+    	time.setText(String.valueOf(String.valueOf((dTime/1000)/60) + ":" 
+    			+ String.valueOf((dTime/1000)%60) + ":" + String.valueOf((dTime)%1000)));
+	} 
 	
 }
