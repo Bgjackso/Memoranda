@@ -10,7 +10,7 @@ public interface LOCLog {
     
     LinesofCode getLOC(int p_defect_num);
     
-    void addLOC(LinesofCode locAmount);
+    void addLOC(LinesofCode loc_amount);
     
     void removeLOC(int locAmount);
         

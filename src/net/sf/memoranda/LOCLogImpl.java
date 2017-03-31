@@ -2,6 +2,7 @@ package net.sf.memoranda;
 
 import java.util.Vector;
 
+import net.sf.memoranda.date.CalendarDate;
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
@@ -37,20 +38,42 @@ public class LOCLogImpl implements LOCLog {
 	}
 
 	@Override
-	public LinesofCode getLOC(String p_defect_num) {
+	public LinesofCode getLOC(int p_loc) {
+		Elements rs = _root.getChildElements("loc");
+		LinesofCode temp_loc = null;
 		
-		return null;
+		for (int i =0; i< rs.size(); i++){
+			
+			if (rs.get(i).getAttribute("loc_amount").getValue().equals(Integer.toString(p_loc))){
+				temp_loc = new LinesofCode();
+				temp_loc.setLOCIntValue(Integer.parseInt(rs.get(i).getAttribute("loc_amount").getValue()));
+				CalendarDate dateFound = new CalendarDate(
+	        			Integer.parseInt(rs.get(i).getChildElements("date").get(0).getAttribute("day").getValue()),
+	        			Integer.parseInt(rs.get(i).getChildElements("date").get(0).getAttribute("month").getValue()),
+	        			Integer.parseInt(rs.get(i).getChildElements("date").get(0).getAttribute("year").getValue())
+	        			);
+	        	temp_loc.setDateAdded(dateFound);
+			}  
+		}
+		return temp_loc;
 	}
 
 	@Override
-	public void addLOC(LinesofCode locAmount) {
+	public void addLOC(LinesofCode loc_amount) {
 		Element loc_element = new Element("loc");
-		loc_element.addAttribute(new Attribute("loc_amount", Integer.toString(locAmount.getLOCIntValue())));
+		loc_element.addAttribute(new Attribute("loc_amount", Integer.toString(loc_amount.getLOCIntValue())));
 		
+		Element loc_date = new Element("date");
+		loc_date.addAttribute(new Attribute("day", Integer.toString(loc_amount.getDateCompleted().getDay())));
+		loc_date.addAttribute(new Attribute("month", Integer.toString(loc_amount.getDateCompleted().getMonth())));
+		loc_date.addAttribute(new Attribute("year", Integer.toString(loc_amount.getDateCompleted().getYear())));
+		loc_element.appendChild(loc_element);
+		
+        _root.appendChild(loc_element);
 	}
 
 	@Override
-	public void removeLOC(String locAmount) {
+	public void removeLOC(int locAmount) {
 		
 	}
 
