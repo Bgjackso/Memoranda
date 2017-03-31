@@ -20,12 +20,12 @@ import javax.swing.event.HyperlinkListener;
 import javax.swing.JOptionPane;
 
 import net.sf.memoranda.LinesofCode;
+import net.sf.memoranda.LOCLog;
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.EventNotificationListener;
 import net.sf.memoranda.EventsManager;
 import net.sf.memoranda.EventsScheduler;
 import net.sf.memoranda.History;
-import net.sf.memoranda.LinesofCode;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
@@ -60,10 +60,11 @@ public class PSPPanel extends JPanel {
 	JTextField locField = new JTextField(10);
 	JButton saveLOC = new JButton("Save");
 	JPanel locPanel = new JPanel();
-	
-	DailyItemsPanel parentPanel = null;
+	LinesofCode loc_object = null;
 	private final JPanel panel = new JPanel();
 	private final JLabel lblLinesOfCode = new JLabel("Lines of Code: ");
+	
+	DailyItemsPanel parentPanel = null;
 	
 	
 	// Things inside the panel that people need to see!
@@ -111,15 +112,27 @@ public class PSPPanel extends JPanel {
 		// Adding Lines of Code panel and buttons
 		locPanel.add(lblLinesOfCode);
 		locPanel.add(locField);
-		//saveLOC.addActionListener(e -> LinesofCode.checkLOCValue(locField));
-			
+		saveLOC.addActionListener(e -> checkLOCValue(locField));
 		locPanel.add(saveLOC);
 		this.add(locPanel, BorderLayout.CENTER);
 		
 		add(panel, BorderLayout.SOUTH);
 		
 	}
-		
+	//checking to see if the text field is valid to be logged and returns value if valid.
+		public void checkLOCValue(JTextField jtext){
+				String str = jtext.getText();
+				int result;
+				if (!str.matches(".*[1234567890].*")){
+					String text = "Invalid Value(s)";
+					jtext.setText(text);
+				} else{
+					result = Integer.parseInt(str);
+					loc_object.setLOCIntValue(result);
+					loc_object.setLOCStrValue(str);
+					jtext.setText(" ");
+				}
+		}
 		
 }
 
