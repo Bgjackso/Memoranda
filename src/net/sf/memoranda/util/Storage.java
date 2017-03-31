@@ -8,6 +8,7 @@
  */
 package net.sf.memoranda.util;
 
+import net.sf.memoranda.DefectList;
 import net.sf.memoranda.Note;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
@@ -45,6 +46,10 @@ public interface Storage {
    
     ResourcesList openResourcesList(Project prj);
     void storeResourcesList(ResourcesList rl, Project prj);
+    
+    //Serialize the defect list
+    DefectList openDefectList(Project prj);
+    void storeDefectList(DefectList p_defectList, Project prj);
     
     void restoreContext();
     void storeContext(); 
