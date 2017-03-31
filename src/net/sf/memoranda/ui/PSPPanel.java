@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.DefaultCellEditor;
@@ -17,6 +19,13 @@ import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
+
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.Histogram;
+import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.style.Styler.LegendPosition;
+
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Defect;
 import net.sf.memoranda.DefectList;
@@ -344,5 +353,7 @@ public class PSPPanel extends JPanel {
 				tableModel.populateTable();
 			}
 		}); 
+		
 	}
+	
 }
