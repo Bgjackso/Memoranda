@@ -5,3 +5,6 @@ script:
   - ant compile
   - ant findbugs
   - ant checkstyle
+
+notifications:
+  slack: ser316-hamburg:MqYcUlnk1VXbOctya3eFa7Sf
