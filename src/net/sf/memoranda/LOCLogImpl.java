@@ -26,6 +26,7 @@ public class LOCLogImpl implements LOCLog {
 		_project = prj;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Vector<LinesofCode> getAllLOC() {
 		Vector v = new Vector();
@@ -33,8 +34,16 @@ public class LOCLogImpl implements LOCLog {
 		
 		for (int i = 0; i < rs.size(); i++){
 			LinesofCode temp_loc = new LinesofCode();
+			temp_loc.setLOCIntValue(Integer.parseInt(rs.get(i).getAttribute("loc_amount").getValue()));
+        	CalendarDate dateFound = new CalendarDate(
+        			Integer.parseInt(rs.get(i).getChildElements("date").get(0).getAttribute("day").getValue()),
+        			Integer.parseInt(rs.get(i).getChildElements("date").get(0).getAttribute("month").getValue()),
+        			Integer.parseInt(rs.get(i).getChildElements("date").get(0).getAttribute("year").getValue())
+        			);
+        	temp_loc.setDateAdded(dateFound);
+        	v.add(temp_loc);
 		}
-		return null;
+		return v;
 	}
 
 	@Override

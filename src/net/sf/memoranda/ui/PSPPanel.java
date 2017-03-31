@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -52,15 +53,20 @@ import javax.swing.SwingConstants;
 public class PSPPanel extends JPanel {
 	BorderLayout borderLayout = new BorderLayout();
 	
+	//toolbar stuff
 	JToolBar toolBar = new JToolBar();
 	JButton historyBackB = new JButton();
 	JButton historyForwardB = new JButton();
 	
 	// Lines of Code Panel stuff
-	JTextField locField = new JTextField(10);
+	LinesofCode loc_object = null;
+	LOCLog loc_log = null;
+	JTextField locField = new JTextField(8);
 	JButton saveLOC = new JButton("Save");
 	JPanel locPanel = new JPanel();
-	LinesofCode loc_object = null;
+	@SuppressWarnings("unchecked")
+	JComboBox<Integer> locSaves = new JComboBox(loc_log.getAllLOC());
+	JButton deleteLOC =new JButton("Delete");
 	private final JPanel panel = new JPanel();
 	private final JLabel lblLinesOfCode = new JLabel("Lines of Code: ");
 	
@@ -109,11 +115,18 @@ public class PSPPanel extends JPanel {
 		toolBar.add(historyForwardB, null);
 		this.add(toolBar, BorderLayout.NORTH);
 		
-		// Adding Lines of Code panel and buttons
+		// Adding Lines of Code text and field
 		locPanel.add(lblLinesOfCode);
 		locPanel.add(locField);
+		// Adding the save button and action listener
 		saveLOC.addActionListener(e -> checkLOCValue(locField));
 		locPanel.add(saveLOC);
+		// Adding loc to loc list and to drop down
+		loc_log.addLOC(loc_object);
+		locPanel.add(locSaves);
+		// Adding the delte button
+		locPanel.add(deleteLOC);
+		// Adding Entire loc panel
 		this.add(locPanel, BorderLayout.CENTER);
 		
 		add(panel, BorderLayout.SOUTH);
