@@ -24,6 +24,7 @@ import javax.swing.border.Border;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.CurrentNote;
+import net.sf.memoranda.DefectList;
 import net.sf.memoranda.NoteListener;
 import net.sf.memoranda.EventNotificationListener;
 import net.sf.memoranda.EventsScheduler;
@@ -50,6 +51,7 @@ import net.sf.memoranda.util.Util;
 
 /*$Id: DailyItemsPanel.java,v 1.22 2005/02/13 03:06:10 rawsushi Exp $*/
 public class DailyItemsPanel extends JPanel {
+	
     BorderLayout borderLayout1 = new BorderLayout();
     JSplitPane splitPane = new JSplitPane();
     JPanel controlPanel = new JPanel(); /* Contains the calendar */
@@ -59,12 +61,16 @@ public class DailyItemsPanel extends JPanel {
     BorderLayout borderLayout3 = new BorderLayout();
     JPanel editorsPanel = new JPanel();
     CardLayout cardLayout1 = new CardLayout();
-    public EditorPanel editorPanel = new EditorPanel(this);
     JLabel currentDateLabel = new JLabel();
     BorderLayout borderLayout4 = new BorderLayout();
-    TaskPanel tasksPanel = new TaskPanel(this);
-    EventsPanel eventsPanel = new EventsPanel(this);
-    AgendaPanel agendaPanel = new AgendaPanel(this);
+    
+    public EditorPanel editorPanel = new EditorPanel(this);
+    public TaskPanel tasksPanel = new TaskPanel(this);
+    public EventsPanel eventsPanel = new EventsPanel(this);
+    public AgendaPanel agendaPanel = new AgendaPanel(this);
+    public PSPPanel pspPanel = new PSPPanel(this);
+    public ChartPanel chartPanel = new ChartPanel(this);
+    
     ImageIcon expIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/exp_right.png"));
     ImageIcon collIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/exp_left.png"));
     ImageIcon bookmarkIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/star8.png"));
@@ -96,6 +102,8 @@ public class DailyItemsPanel extends JPanel {
     JTabbedPane tasksTabbedPane = new JTabbedPane();
     JTabbedPane eventsTabbedPane = new JTabbedPane();
 	JTabbedPane agendaTabbedPane = new JTabbedPane();
+	JTabbedPane pspTabbedPane = new JTabbedPane();
+	JTabbedPane chartTabbedPane = new JTabbedPane();
     Border border2;
 
 	String CurrentPanel;
@@ -106,11 +114,11 @@ public class DailyItemsPanel extends JPanel {
         try {
             parentPanel = _parentPanel;
             jbInit();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             new ExceptionDialog(ex);
         }
     }
+    
     void jbInit() throws Exception {
         border1 = BorderFactory.createEtchedBorder(Color.white, Color.gray);
         border2 = BorderFactory.createEtchedBorder(Color.white, new Color(161, 161, 161));
@@ -154,11 +162,13 @@ public class DailyItemsPanel extends JPanel {
         toggleButton.setContentAreaFilled(false);
         toggleButton.setFocusPainted(false);
         toggleButton.setMargin(new Insets(0, 0, 0, 0));
+        
         toggleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 toggleButton_actionPerformed(e);
             }
         });
+        
         toggleButton.setIcon(collIcon);
         indicatorsPanel.setOpaque(false);
         indicatorsPanel.setLayout(flowLayout1);
@@ -206,6 +216,8 @@ public class DailyItemsPanel extends JPanel {
         editorsPanel.add(eventsPanel, "EVENTS");
         editorsPanel.add(tasksPanel, "TASKS");
         editorsPanel.add(editorPanel, "NOTES");
+        editorsPanel.add(pspPanel, "PSP");
+        editorsPanel.add(chartPanel, "CHART");
         
         splitPane.add(mainPanel, JSplitPane.RIGHT);
         splitPane.add(controlPanel, JSplitPane.LEFT);
@@ -222,7 +234,7 @@ public class DailyItemsPanel extends JPanel {
         });
 
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) {
+            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl) {
 //            	Util.debug("DailyItemsPanel Project Listener: Project is going to be changed!");				
 //            	Util.debug("current project is " + CurrentProject.get().getTitle());
 
@@ -256,8 +268,9 @@ public class DailyItemsPanel extends JPanel {
 		
         calendar.addSelectionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (calendarIgnoreChange)
+                if (calendarIgnoreChange) {
                     return;
+                }
                 dateChangedByCalendar = true;
                 CurrentDate.set(calendar.get());
                 dateChangedByCalendar = false;
@@ -301,6 +314,8 @@ public class DailyItemsPanel extends JPanel {
         mainTabsPanel.add(tasksTabbedPane, "TASKSTAB");
         mainTabsPanel.add(notesControlPane, "NOTESTAB");
 		mainTabsPanel.add(agendaTabbedPane, "AGENDATAB");
+		mainTabsPanel.add(pspTabbedPane, "PSPTAB");
+		mainTabsPanel.add(chartTabbedPane, "CHARTTAB");
         updateIndicators(CurrentDate.get(), CurrentProject.getTaskList());
         mainPanel.setBorder(null);
     }
@@ -367,10 +382,12 @@ public class DailyItemsPanel extends JPanel {
 
         Cursor cur = App.getFrame().getCursor();
         App.getFrame().setCursor(waitCursor);
-        if (!changedByHistory)
+        if (!changedByHistory) {
             History.add(new HistoryItem(CurrentDate.get(), newprj));
-        if (editorPanel.isDocumentChanged())
+        }
+        if (editorPanel.isDocumentChanged()){
             saveNote();
+        }
         /*if ((currentNote != null) && !changedByHistory && !addedToHistory)
                     History.add(new HistoryItem(currentNote));*/
         CurrentProject.save();        
@@ -450,20 +467,16 @@ public class DailyItemsPanel extends JPanel {
          //   calendar.jnCalendar.updateUI();
         }
         if (pan.equals("TASKS") && (tasksPanel.taskTable.getSelectedRow() > -1)) {
-            Task t =
-                CurrentProject.getTaskList().getTask(
-                    tasksPanel
-                        .taskTable
-                        .getModel()
-                        .getValueAt(tasksPanel.taskTable.getSelectedRow(), TaskTable.TASK_ID)
-                        .toString());
+            Task t = CurrentProject.getTaskList().getTask(tasksPanel.taskTable.getModel()
+                .getValueAt(tasksPanel.taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
             calendar.jnCalendar.renderer.setTask(t);
        //     calendar.jnCalendar.updateUI();
         }
         boolean isAg = pan.equals("AGENDA");
         agendaPanel.setActive(isAg);
-        if (isAg)
+        if (isAg) {
         	agendaPanel.refresh(CurrentDate.get());
+        }
         cardLayout1.show(editorsPanel, pan);
         cardLayout2.show(mainTabsPanel, pan + "TAB");
 		calendar.jnCalendar.updateUI();
