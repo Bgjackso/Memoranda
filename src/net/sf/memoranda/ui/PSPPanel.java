@@ -42,6 +42,7 @@ import net.sf.memoranda.Defect;
 import net.sf.memoranda.DefectList;
 import net.sf.memoranda.History;
 import net.sf.memoranda.NoteList;
+import net.sf.memoranda.PSPTimer;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ResourcesList;
