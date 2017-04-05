@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
@@ -64,9 +65,9 @@ public class PSPPanel extends JPanel {
 	JTextField locField = new JTextField(8);
 	JButton saveLOC = new JButton("Save");
 	JPanel locPanel = new JPanel();
-	@SuppressWarnings("unchecked")
-	JComboBox<Integer> locSaves = new JComboBox(loc_log.getAllLOC());
-	JButton deleteLOC =new JButton("Delete");
+	//@SuppressWarnings("unchecked")
+	JComboBox locSaves = new JComboBox(/*loc_log.getAllLOC()*/);
+	JButton deleteLOC =  new JButton("Delete");
 	private final JPanel panel = new JPanel();
 	private final JLabel lblLinesOfCode = new JLabel("Lines of Code: ");
 	
@@ -122,9 +123,9 @@ public class PSPPanel extends JPanel {
 		saveLOC.addActionListener(e -> checkLOCValue(locField));
 		locPanel.add(saveLOC);
 		// Adding loc to loc list and to drop down
-		loc_log.addLOC(loc_object);
+		//loc_log.addLOC(loc_object);
 		locPanel.add(locSaves);
-		// Adding the delte button
+		// Adding the delete button
 		locPanel.add(deleteLOC);
 		// Adding Entire loc panel
 		this.add(locPanel, BorderLayout.CENTER);
