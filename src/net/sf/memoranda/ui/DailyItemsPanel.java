@@ -24,6 +24,7 @@ import javax.swing.border.Border;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.CurrentNote;
+import net.sf.memoranda.DefectList;
 import net.sf.memoranda.NoteListener;
 import net.sf.memoranda.EventNotificationListener;
 import net.sf.memoranda.EventsScheduler;
@@ -68,6 +69,7 @@ public class DailyItemsPanel extends JPanel {
     public EventsPanel eventsPanel = new EventsPanel(this);
     public AgendaPanel agendaPanel = new AgendaPanel(this);
     public PSPPanel pspPanel = new PSPPanel(this);
+    public ChartPanel chartPanel = new ChartPanel(this);
     
     ImageIcon expIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/exp_right.png"));
     ImageIcon collIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/exp_left.png"));
@@ -101,6 +103,7 @@ public class DailyItemsPanel extends JPanel {
     JTabbedPane eventsTabbedPane = new JTabbedPane();
 	JTabbedPane agendaTabbedPane = new JTabbedPane();
 	JTabbedPane pspTabbedPane = new JTabbedPane();
+	JTabbedPane chartTabbedPane = new JTabbedPane();
     Border border2;
 
 	String CurrentPanel;
@@ -214,6 +217,7 @@ public class DailyItemsPanel extends JPanel {
         editorsPanel.add(tasksPanel, "TASKS");
         editorsPanel.add(editorPanel, "NOTES");
         editorsPanel.add(pspPanel, "PSP");
+        editorsPanel.add(chartPanel, "CHART");
         
         splitPane.add(mainPanel, JSplitPane.RIGHT);
         splitPane.add(controlPanel, JSplitPane.LEFT);
@@ -230,7 +234,7 @@ public class DailyItemsPanel extends JPanel {
         });
 
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) {
+            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl) {
 //            	Util.debug("DailyItemsPanel Project Listener: Project is going to be changed!");				
 //            	Util.debug("current project is " + CurrentProject.get().getTitle());
 
@@ -311,6 +315,7 @@ public class DailyItemsPanel extends JPanel {
         mainTabsPanel.add(notesControlPane, "NOTESTAB");
 		mainTabsPanel.add(agendaTabbedPane, "AGENDATAB");
 		mainTabsPanel.add(pspTabbedPane, "PSPTAB");
+		mainTabsPanel.add(chartTabbedPane, "CHARTTAB");
         updateIndicators(CurrentDate.get(), CurrentProject.getTaskList());
         mainPanel.setBorder(null);
     }

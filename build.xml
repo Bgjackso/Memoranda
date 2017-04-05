@@ -20,6 +20,7 @@
 		<property name="tests.jacoco.dir"      value="${tests.dir}/jacoco"/>
 		<property name="tests.findbugs.dir"    value="${tests.dir}/findbugs"/>
 		<property name="tests.checkstyle.dir"  value="${tests.dir}/checkstyle"/>
+		<property name="tests.metrics.dir"     value="${tests.dir}/metrics"/>
 		<property name="jarname"               value="${name}.jar"/>
 		<property name="dist.dir"              value="${basedir}/dist"/>
 		<!-- compile options -->
@@ -273,5 +274,9 @@
 			</checkstyle>
 		</target>
 		
-	</project>
-
+		<!-- =================================================================== -->
+		<!-- Runs metrics                                                  -->
+		<!-- =================================================================== -->
+		<!-- To be implemented as automated tasks in Sprint 4 -->
+		
+</project>
