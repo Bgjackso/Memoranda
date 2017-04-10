@@ -23,23 +23,20 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-
-//import TimeFrame.starts;
-
 import javax.swing.JOptionPane;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
-
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.Histogram;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.style.Styler.LegendPosition;
-
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Defect;
 import net.sf.memoranda.DefectList;
@@ -69,7 +66,6 @@ public class PSPPanel extends JPanel {
 	JScrollPane scrollPane = new JScrollPane();
 
 	DailyItemsPanel parentPanel = null;
-	
 
 	//PSP Timer
 	JPanel timerPanel = new JPanel();
@@ -79,7 +75,6 @@ public class PSPPanel extends JPanel {
     JButton start = new JButton ("Start");
     JButton reset = new JButton ("Reset");
 	
-
 	/**
 	 * Defect Log Table Model
 	 */
@@ -252,7 +247,6 @@ public class PSPPanel extends JPanel {
 		}
 	}
 
-	
 	// Things inside the panel that people need to see!
 	public PSPPanel(DailyItemsPanel _parentPanel){
 		try {
@@ -265,13 +259,13 @@ public class PSPPanel extends JPanel {
 	// inside the panel
 	@SuppressWarnings("unchecked")
 	void jbInit() throws Exception {
+		toolBar.setFloatable(false);
 		this.setLayout(borderLayout);
     
 		scrollPane.getViewport().setBackground(Color.white);
 		this.add(scrollPane, BorderLayout.CENTER);
-		toolBar.setFloatable(false);
 		
-		// Back button to go back one day from current date
+		// Back button to go back one day previous to current date
 		historyBackB.setAction(History.historyBackAction);
 		historyBackB.setFocusable(false);
 		historyBackB.setBorderPainted(false);
@@ -281,7 +275,7 @@ public class PSPPanel extends JPanel {
 		historyBackB.setMinimumSize(new Dimension(24, 24));
 		historyBackB.setMaximumSize(new Dimension(24, 24));
 		historyBackB.setText("");
-		
+
 		// Forward button to go forward one day from the current date. 
 		historyForwardB.setAction(History.historyForwardAction);
 		historyForwardB.setBorderPainted(false);
@@ -359,7 +353,6 @@ public class PSPPanel extends JPanel {
 		correctCol.setCellEditor(new DefaultCellEditor(correctBox));
 
 		this.add(scrollPane2, BorderLayout.CENTER);
-
 
 		table.setFillsViewportHeight(true);
 		tableModel.populateTable();
