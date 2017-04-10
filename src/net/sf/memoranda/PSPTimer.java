@@ -23,6 +23,7 @@ public class PSPTimer implements Runnable {
    * instance of JPanel instead of JFrame
    */
   JLabel time = new JLabel();
+  //JLabel t = new JLabel();
   public static void main(String[] args) {
       /*TimeFrame t = new TimeFrame();
     //frame creation - panel goes here  
@@ -32,6 +33,7 @@ public class PSPTimer implements Runnable {
       f.setLocationRelativeTo(null);
       f.getContentPane().add(t);
       f.setVisible(true);*/
+	  //JLabel t = new JLabel();
   }
 
   public void startTimer() {
@@ -66,7 +68,7 @@ public class PSPTimer implements Runnable {
       long startTime = System.currentTimeMillis();
       // keep showing the difference in time until we are either paused or not running anymore
       while(running && !paused) {
-          //update(summedTime + (System.currentTimeMillis() - startTime)); //timer causing issues
+          update(summedTime + (System.currentTimeMillis() - startTime)); //timer causing issues
       }
       if(paused){
       	summedTime += System.currentTimeMillis() - startTime;

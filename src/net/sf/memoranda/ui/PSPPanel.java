@@ -74,7 +74,7 @@ public class PSPPanel extends JPanel {
 	//PSP Timer
 	JPanel timerPanel = new JPanel();
 	JLabel time = new JLabel("Press 'Start' to begin", JLabel.CENTER);
-    PSPTimer timer;
+    PSPTimer timer = new PSPTimer();
     JButton pause = new JButton ("Pause");
     JButton start = new JButton ("Start");
     JButton reset = new JButton ("Reset");
@@ -394,9 +394,10 @@ public class PSPPanel extends JPanel {
 		//pause.addActionListener(new starts());
 		//reset.addActionListener(new starts());
 		time.setBackground(Color.WHITE);
-		timerPanel.add(time);
+		timerPanel.add(time); //new JLabel instead of time? 
 		time.setFont(new Font("Consolas", Font.BOLD, 20));
 		time.setForeground(Color.BLACK);
+		//timerPanel.add(JLabel from PSPTimer)
 		timerPanel.add(start);
 		timerPanel.add(pause);
 		timerPanel.add(reset);
@@ -408,13 +409,13 @@ public class PSPPanel extends JPanel {
 	public class starts implements ActionListener{
         public void actionPerformed(ActionEvent event){
             if(event.getSource() == start){
-            	update(0);
+            	timer.update(0);
             	timer.startTimer();
             }
             else if (event.getSource() == pause){
                 timer.pauseTimer();
             }else{
-            	update(0);
+            	timer.update(0); //updating timer in PSPTimer class?
             	timer.resetTimer(); 
             }
         }
@@ -459,11 +460,11 @@ public class PSPPanel extends JPanel {
 	      }else{
 	          summedTime = 0;
 	      }
-	  } */
+	  } 
 	
 	public void update(long dTime){
     	time.setText(String.valueOf(String.valueOf((dTime/1000)/60) + ":" 
     			+ String.valueOf((dTime/1000)%60) + ":" + String.valueOf((dTime)%1000)));
-	} 
+	} */
 	
 }
