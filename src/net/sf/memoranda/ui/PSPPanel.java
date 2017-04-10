@@ -64,7 +64,6 @@ public class PSPPanel extends JPanel {
 		}
   }
 	// inside the panel
-	@SuppressWarnings("unchecked")
 	void jbInit() throws Exception {
 		toolBar.setFloatable(false);
 		this.setLayout(borderLayout);
@@ -127,7 +126,7 @@ public class PSPPanel extends JPanel {
 		TableColumn correctCol = table.getColumnModel().getColumn(4);
 
 		// Combo for drop-down list for Type of Defect
-		JComboBox typeBox = new JComboBox();
+		JComboBox<String> typeBox = new JComboBox<String>();
 		typeBox.addItem("Documentation");
 		typeBox.addItem("Syntax");
 		typeBox.addItem("Build, Package");
@@ -140,7 +139,7 @@ public class PSPPanel extends JPanel {
 		typeBox.addItem("Environment");
 
 		// Combo box for drop-list for Phase the Defect was Injected
-		JComboBox injectBox = new JComboBox();
+		JComboBox<String> injectBox = new JComboBox<String>();
 		injectBox.addItem("Planning");
 		injectBox.addItem("Design");
 		injectBox.addItem("Coding");
@@ -149,7 +148,7 @@ public class PSPPanel extends JPanel {
 		injectBox.addItem("Post-Mortem");
 		
 		// Combo box for drop-list for phase the defected was corrected
-		JComboBox correctBox = new JComboBox();
+		JComboBox<String> correctBox = new JComboBox<String>();
 		correctBox.addItem("Planning");
 		correctBox.addItem("Design");
 		correctBox.addItem("Coding");
@@ -202,7 +201,7 @@ public class PSPPanel extends JPanel {
 		timerPanel.add(start);
 		timerPanel.add(pause);
 		timerPanel.add(reset);
-		this.add(scrollPane3, borderLayout.SOUTH); //add scrollPane4 first when complete
+		this.add(scrollPane3, BorderLayout.SOUTH); //add scrollPane4 first when complete
 		//pull in 'time' lane
 		
 	}
