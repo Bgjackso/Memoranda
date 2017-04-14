@@ -41,6 +41,7 @@ import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Defect;
 import net.sf.memoranda.DefectList;
 import net.sf.memoranda.History;
+import net.sf.memoranda.LOCList;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.PSPTimer;
 import net.sf.memoranda.Project;
@@ -290,8 +291,6 @@ public class PSPPanel extends JPanel {
 		// Adding the buttons to the toolbar and adding the tool bar
 		toolBar.add(historyBackB, null);
 		toolBar.add(historyForwardB, null);
-
-		this.add(toolBar, BorderLayout.NORTH);
 		
 		//TIMER WAS HERE
 
@@ -372,7 +371,7 @@ public class PSPPanel extends JPanel {
 		});
 		
 		CurrentProject.addProjectListener(new ProjectListener() {
-			public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl) {                
+			public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl, LOCList ll) {                
 
 			}
 			public void projectWasChanged() {

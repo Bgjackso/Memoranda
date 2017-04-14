@@ -23,6 +23,7 @@ import javax.swing.text.Document;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.DefectList;
+import net.sf.memoranda.LOCList;
 import net.sf.memoranda.Note;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
@@ -115,7 +116,7 @@ public class SearchPanel extends JPanel {
         jPanel4.add(regexpCB, BorderLayout.CENTER);
         jPanel3.add(searchB, BorderLayout.SOUTH);
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl) {
+            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl, LOCList ll) {
                 notesList.update(new Vector());
             }
             public void projectWasChanged() {}

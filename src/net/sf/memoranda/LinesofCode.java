@@ -1,36 +1,42 @@
 package net.sf.memoranda;
 
-import java.util.Arrays;
 import net.sf.memoranda.date.CalendarDate;
-
-import javax.swing.JTextField;
 
 public class LinesofCode {
 	
-	
+	public int locNumber;
 	public int locIntValue;
 	public String locStrValue;
-	public String str;
 	public CalendarDate loc_completed;
+	public String description;
 	
 	public LinesofCode(){
-		this.locIntValue = 0;
-		this.locStrValue = "0";
+		this.locNumber = 0;
+		//this.locStrValue = "0";
+		this.loc_completed = CalendarDate.today();
 	}
 	
-	public int getLOCIntValue(){
-		return this.locIntValue;
+	public int getLocNumber (){
+		return this.locNumber;
 	}
 	
 	public String getLOCStrValue(){
 		return this.locStrValue;
 	}
 	
+	public int getLOCIntValue(){
+		return this.locIntValue;
+	}
+	
 	public CalendarDate getDateCompleted(){
 		return this.loc_completed;
 	}
 	
-	public void setLOCIntValue(int locInt){
+	public String getDescription() { 
+		return this.description; 
+		}
+	
+	public void setLocNumber (int locInt){
 		this.locIntValue = locInt;
 	}
 	
@@ -38,8 +44,17 @@ public class LinesofCode {
 		this.locStrValue = locStr;
 	}
 	
-	public void setDateAdded(CalendarDate loc_date){
+	public void setLOCIntValue(int locInt){
+		this.locIntValue = locInt;
+	}
+	
+	public void setDateCompleted(CalendarDate loc_date){
 		this.loc_completed = loc_date;
+	}
+	
+	public void setDescription (String description)
+	{
+		this.description = description;
 	}
 	
 }
