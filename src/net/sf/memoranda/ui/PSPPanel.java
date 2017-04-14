@@ -41,6 +41,7 @@ import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Defect;
 import net.sf.memoranda.DefectList;
 import net.sf.memoranda.History;
+import net.sf.memoranda.LOCList;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.PSPTimer;
 import net.sf.memoranda.Project;
@@ -56,7 +57,7 @@ public class PSPPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	BorderLayout borderLayout = new BorderLayout();
-  
+
 	JToolBar toolBar = new JToolBar();
 	JButton historyBackB = new JButton();
 	JButton historyForwardB = new JButton();
@@ -255,13 +256,13 @@ public class PSPPanel extends JPanel {
 		} catch (Exception ex) {
 			new ExceptionDialog(ex);
 		}
-  }
+	}
 	// inside the panel
 	@SuppressWarnings("unchecked")
 	void jbInit() throws Exception {
 		toolBar.setFloatable(false);
 		this.setLayout(borderLayout);
-    
+
 		scrollPane.getViewport().setBackground(Color.white);
 		this.add(scrollPane, BorderLayout.CENTER);
 		
@@ -287,11 +288,9 @@ public class PSPPanel extends JPanel {
 		historyForwardB.setMaximumSize(new Dimension(24, 24));
 		historyForwardB.setText("");
 		
-		// Adding the buttons to the toolbar and adding the tools bar
+		// Adding the buttons to the toolbar and adding the tool bar
 		toolBar.add(historyBackB, null);
 		toolBar.add(historyForwardB, null);
-
-		this.add(toolBar, BorderLayout.NORTH);
 		
 		//TIMER WAS HERE
 
@@ -372,7 +371,7 @@ public class PSPPanel extends JPanel {
 		});
 		
 		CurrentProject.addProjectListener(new ProjectListener() {
-			public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl) {                
+			public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl, LOCList ll) {                
 
 			}
 			public void projectWasChanged() {
