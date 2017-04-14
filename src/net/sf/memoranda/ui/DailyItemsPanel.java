@@ -70,7 +70,7 @@ public class DailyItemsPanel extends JPanel {
     public EventsPanel eventsPanel = new EventsPanel(this);
     public AgendaPanel agendaPanel = new AgendaPanel(this);
     public PSPPanel pspPanel = new PSPPanel(this);
-    public ChartPanel chartPanel = new ChartPanel(this);
+    public LOCChartPanel chartPanel = new LOCChartPanel(this);
     
     ImageIcon expIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/exp_right.png"));
     ImageIcon collIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/exp_left.png"));
