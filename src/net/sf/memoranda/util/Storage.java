@@ -9,6 +9,7 @@
 package net.sf.memoranda.util;
 
 import net.sf.memoranda.DefectList;
+import net.sf.memoranda.LOCList;
 import net.sf.memoranda.Note;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
@@ -51,7 +52,12 @@ public interface Storage {
     DefectList openDefectList(Project prj);
     void storeDefectList(DefectList p_defectList, Project prj);
     
+    LOCList openLOCList(Project _project); 
+    void storeLOCList(LOCList p_locLog, Project prj);
+    
     void restoreContext();
-    void storeContext(); 
+    void storeContext();
+    
+    
        
 }

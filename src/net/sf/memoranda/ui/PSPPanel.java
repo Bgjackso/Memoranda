@@ -2,6 +2,7 @@ package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,7 @@ import javax.swing.table.TableModel;
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.DefectList;
 import net.sf.memoranda.History;
+import net.sf.memoranda.LOCList;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.PSPTimer;
 import net.sf.memoranda.Project;
@@ -31,10 +33,10 @@ import net.sf.memoranda.ui.DefectPanel.DefectsTableModel;
 import net.sf.memoranda.util.Local;
 
 public class PSPPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 	BorderLayout borderLayout = new BorderLayout();
-  
+
 	JToolBar toolBar = new JToolBar();
 	JButton historyBackB = new JButton();
 	JButton historyForwardB = new JButton();
@@ -49,7 +51,7 @@ public class PSPPanel extends JPanel {
 	//PSP Timer
 	JPanel timerPanel = new JPanel();
 	JLabel time = new JLabel("Press 'Start' to begin", JLabel.CENTER);
-    PSPTimer timer;
+    PSPTimer timer = new PSPTimer();
     JButton pause = new JButton ("Pause");
     JButton start = new JButton ("Start");
     JButton reset = new JButton ("Reset");
@@ -62,12 +64,14 @@ public class PSPPanel extends JPanel {
 		} catch (Exception ex) {
 			new ExceptionDialog(ex);
 		}
-  }
+	}
 	// inside the panel
+
 	void jbInit() throws Exception {
+
 		toolBar.setFloatable(false);
 		this.setLayout(borderLayout);
-    
+
 		scrollPane.getViewport().setBackground(Color.white);
 		this.add(scrollPane, BorderLayout.CENTER);
 		
@@ -93,11 +97,9 @@ public class PSPPanel extends JPanel {
 		historyForwardB.setMaximumSize(new Dimension(24, 24));
 		historyForwardB.setText("");
 		
-		// Adding the buttons to the toolbar and adding the tools bar
+		// Adding the buttons to the toolbar and adding the tool bar
 		toolBar.add(historyBackB, null);
 		toolBar.add(historyForwardB, null);
-
-		this.add(toolBar, BorderLayout.NORTH);
 		
 		//TIMER WAS HERE
 
@@ -180,20 +182,18 @@ public class PSPPanel extends JPanel {
 		});
 		
 		CurrentProject.addProjectListener(new ProjectListener() {
-			public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl) {                
+			public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl, LOCList ll) {                
 
 			}
 			public void projectWasChanged() {
 				((DefectsTableModel) tableModel).populateTable();
 			}
 		}); 
-		
-		//public PSPTimer()
+
 		JScrollPane scrollPane3 = new JScrollPane(timerPanel);
-		//timer = new PSPTimer();
-		//start.addActionListener(new starts()); //pertain to class below
-		//pause.addActionListener(new starts());
-		//reset.addActionListener(new starts());
+		start.addActionListener(new starts());
+		pause.addActionListener(new starts());
+		reset.addActionListener(new starts());
 		time.setBackground(Color.WHITE);
 		timerPanel.add(time);
 		time.setFont(new Font("Consolas", Font.BOLD, 20));
@@ -201,70 +201,72 @@ public class PSPPanel extends JPanel {
 		timerPanel.add(start);
 		timerPanel.add(pause);
 		timerPanel.add(reset);
+
 		this.add(scrollPane3, BorderLayout.SOUTH); //add scrollPane4 first when complete
-		//pull in 'time' lane
-		
 	}
 	
 	public class starts implements ActionListener{
         public void actionPerformed(ActionEvent event){
             if(event.getSource() == start){
-            	update(0);
+            	timer.update(0);
             	timer.startTimer();
             }
             else if (event.getSource() == pause){
                 timer.pauseTimer();
             }else{
-            	update(0);
+            	timer.update(0);
             	timer.resetTimer(); 
             }
         }
     }
 	
-	/*public void startTimer() {
-	      running = true;
-	      paused = false;
-	      //start thread
-	      runThread = new Thread(this);
-	      runThread.start();
-	      //update(0);
-	  }
+	public class PSPTimer implements Runnable{
+		  private Thread runThread;
+		  private boolean running = false;
+		  private boolean paused = false;
+		  private long summedTime = 0;
 
-	  public void pauseTimer() {
-	      //pauses but is still able to restart
-	      paused = true;
-	  }
+		  public void startTimer() {
+		      running = true;
+		      paused = false;
+		      runThread = new Thread(this);
+		      runThread.start();
+		  }
 
-	  public void resetTimer() { //can only be reset if timer is paused
-	      if (paused){
-	      	running = false;
-	          paused = false;
-	          summedTime = 0;
-	          //update(0);
-	      }
-	  }
-	  
-	  public void saveTime(){
-	  	//TODO
-	  }
+		  public void pauseTimer() {
+		      paused = true;
+		  }
 
-	  @Override
-	  public void run() {
-	      long startTime = System.currentTimeMillis();
-	      // keep showing the difference in time until we are either paused or not running anymore
-	      while(running && !paused) {
-	          //update(summedTime + (System.currentTimeMillis() - startTime)); //timer causing issues
-	      }
-	      if(paused){
-	      	summedTime += System.currentTimeMillis() - startTime;
-	      }else{
-	          summedTime = 0;
-	      }
-	  } */
-	
-	public void update(long dTime){
-    	time.setText(String.valueOf(String.valueOf((dTime/1000)/60) + ":" 
-    			+ String.valueOf((dTime/1000)%60) + ":" + String.valueOf((dTime)%1000)));
-	} 
-	
+		  public void resetTimer() {
+		      if (paused){
+		    	  running = false;
+		          paused = false;
+		          summedTime = 0;
+		          update(0);
+		      }
+		  }
+		  
+		  public void saveTime(){
+		  	//TODO
+		  }
+		
+		  @Override
+		  public void run() {
+			  long startTime = System.currentTimeMillis();
+		      
+		      while(running && !paused) {
+		    	  update(summedTime + (System.currentTimeMillis() - startTime)); //timer causing issues
+		      }
+		      if(paused){
+		    	  summedTime += System.currentTimeMillis() - startTime;
+		      }else{
+		    	  summedTime = 0;
+		      }
+		  }
+		  
+		  public void update(long dTime){
+			  time.setText(String.valueOf(String.valueOf((dTime/1000)/60) + ":" 
+					  + String.valueOf((dTime/1000)%60) + ":" + String.valueOf((dTime)%1000)));
+		  } 
+	}
 }
