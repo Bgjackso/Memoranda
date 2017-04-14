@@ -22,6 +22,8 @@ import javax.swing.text.html.HTMLEditorKit;
 import net.sf.memoranda.DefectList;
 import net.sf.memoranda.DefectListImpl;
 import net.sf.memoranda.EventsManager;
+import net.sf.memoranda.LOCList;
+import net.sf.memoranda.LOCListImpl;
 import net.sf.memoranda.Note;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.NoteListImpl;
@@ -466,6 +468,34 @@ public class FileStorage implements Storage {
     	saveDocument(
     			p_defectList.getXMLContent(),
     			JN_DOCPATH + prj.getID() + File.separator + ".defects");
+    }
+    
+    public LOCList openLOCList(Project prj)
+    {
+    	String filename = JN_DOCPATH + prj.getID() + File.separator + ".loc";
+    	if (documentExists(filename))
+    	{
+    		System.out.println("[DEBUG] Open loc lists: " + filename);
+    		return new LOCListImpl(openDocument(filename), prj);
+    	}
+    	else
+    	{
+    		System.out.println("[DEBUG] New loc list created");
+    		return new LOCListImpl(prj);
+    	}
+    }
+    
+    public void storeLOCList(LOCList p_locList, Project prj)
+    {
+    	System.out.println(
+    			"[DEBUG] Save LOC list: "
+    			+ JN_DOCPATH
+    			+ prj.getID()
+    			+ File.separator
+    			+ ".loc");
+    	saveDocument(
+    			p_locList.getXMLContent_(),
+    			JN_DOCPATH + prj.getID() + File.separator + ".loc");
     }
     /**
      * @see net.sf.memoranda.util.Storage#restoreContext()
