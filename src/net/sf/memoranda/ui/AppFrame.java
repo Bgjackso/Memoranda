@@ -44,6 +44,7 @@ import net.sf.memoranda.EventsScheduler;
 import net.sf.memoranda.util.ICalExporter;
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.History;
+import net.sf.memoranda.LOCList;
 import net.sf.memoranda.Note;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
@@ -671,7 +672,7 @@ public class AppFrame extends JFrame {
         CurrentProject.addProjectListener(new ProjectListener() {
 
             public void projectChange(Project prj, NoteList nl, TaskList tl,
-                    ResourcesList rl, DefectList dl) {
+                    ResourcesList rl, DefectList dl, LOCList ll) {
             }
 
             public void projectWasChanged() {

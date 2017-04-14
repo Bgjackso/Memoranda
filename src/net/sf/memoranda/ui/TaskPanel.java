@@ -27,6 +27,7 @@ import javax.swing.event.ListSelectionListener;
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.DefectList;
 import net.sf.memoranda.History;
+import net.sf.memoranda.LOCList;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
@@ -341,7 +342,7 @@ public class TaskPanel extends JPanel {
             }
         });
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl) {
+            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl, LOCList ll) {
                 newTaskB.setEnabled(
                     CurrentDate.get().inPeriod(p.getStartDate(), p.getEndDate()));
             }

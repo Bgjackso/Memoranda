@@ -153,7 +153,7 @@ public class WorkPanel extends JPanel {
 		this.add(panel, BorderLayout.CENTER);
 		
 		toolBar.setOrientation(JToolBar.VERTICAL);
-		toolBar.setBackground(Color.white);
+		toolBar.setBackground(new Color(215, 225, 250));
 		toolBar.setBorderPainted(false);
 		toolBar.setFloatable(false);
 		toolBar.add(agendaB, null);
