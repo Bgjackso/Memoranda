@@ -14,6 +14,8 @@ public class LinesofCode {
 		this.locNumber = 0;
 		//this.locStrValue = "0";
 		this.loc_completed = CalendarDate.today();
+		this.locIntValue = 0;
+		this.description = "";
 	}
 	
 	public int getLocNumber (){
@@ -37,7 +39,7 @@ public class LinesofCode {
 		}
 	
 	public void setLocNumber (int locInt){
-		this.locIntValue = locInt;
+		this.locNumber = locInt;
 	}
 	
 	public void setLOCStrValue(String locStr){

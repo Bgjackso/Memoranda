@@ -26,21 +26,21 @@ public class LOCListImpl implements LOCList {
 		_project = prj;
 	}
 	
-	public Vector<LinesofCode> getAllLOC() {
+	public Vector getAllLOC() {
 		Vector v = new Vector();
 		Elements rs = _root.getChildElements("loc");
 		
 		for (int i = 0; i < rs.size(); i++){
 			LinesofCode temp_loc = new LinesofCode();
-			temp_loc.setLocNumber(Integer.parseInt(rs.get(i).getAttribute("loc_Number").getValue()));
+			temp_loc.setLocNumber(Integer.parseInt(rs.get(i).getAttribute("loc_number").getValue()));
         	CalendarDate dateCompleted = new CalendarDate(
         			Integer.parseInt(rs.get(i).getChildElements("date").get(0).getAttribute("day").getValue()),
         			Integer.parseInt(rs.get(i).getChildElements("date").get(0).getAttribute("month").getValue()),
         			Integer.parseInt(rs.get(i).getChildElements("date").get(0).getAttribute("year").getValue())
         			);
         	temp_loc.setDateCompleted(dateCompleted);
-        	temp_loc.setLOCIntValue(Integer.parseInt(rs.get(i).getAttribute("Lines of Code").getValue()));
-        	temp_loc.setDescription(rs.get(i).getAttribute("Description").getValue());
+        	temp_loc.setLOCIntValue(Integer.parseInt(rs.get(i).getAttribute("lines_of_code").getValue()));
+        	temp_loc.setDescription(rs.get(i).getAttribute("description").getValue());
         	
         	v.add(temp_loc);
 		}
@@ -53,17 +53,17 @@ public class LOCListImpl implements LOCList {
 		
 		for (int i =0; i< rs.size(); i++){
 			
-			if (rs.get(i).getAttribute("loc_Number").getValue().equals(Integer.toString(p_loc))){
+			if (rs.get(i).getAttribute("loc_number").getValue().equals(Integer.toString(p_loc))){
 				temp_loc = new LinesofCode();
-				temp_loc.setLocNumber(Integer.parseInt(rs.get(i).getAttribute("loc_Number").getValue()));
+				temp_loc.setLocNumber(Integer.parseInt(rs.get(i).getAttribute("loc_number").getValue()));
 				CalendarDate dateCompleted = new CalendarDate(
 	        			Integer.parseInt(rs.get(i).getChildElements("date").get(0).getAttribute("day").getValue()),
 	        			Integer.parseInt(rs.get(i).getChildElements("date").get(0).getAttribute("month").getValue()),
 	        			Integer.parseInt(rs.get(i).getChildElements("date").get(0).getAttribute("year").getValue())
 	        			);
 	        	temp_loc.setDateCompleted(dateCompleted);
-	        	temp_loc.setLOCIntValue(Integer.parseInt(rs.get(i).getAttribute("Lines of Code").getValue()));
-	        	temp_loc.setDescription(rs.get(i).getAttribute("Description").getValue());
+	        	temp_loc.setLOCIntValue(Integer.parseInt(rs.get(i).getAttribute("lines_of_code").getValue()));
+	        	temp_loc.setDescription(rs.get(i).getAttribute("description").getValue());
 			}  
 		}
 		return temp_loc;
@@ -71,7 +71,7 @@ public class LOCListImpl implements LOCList {
 
 	public void addLOC(LinesofCode p_loc) {
 		Element loc_element = new Element("loc");
-		loc_element.addAttribute(new Attribute("loc_Number", Integer.toString(p_loc.getLocNumber())));
+		loc_element.addAttribute(new Attribute("loc_number", Integer.toString(p_loc.getLocNumber())));
 		
 		Element loc_date = new Element("date");
 		loc_date.addAttribute(new Attribute("day", Integer.toString(p_loc.getDateCompleted().getDay())));
@@ -79,8 +79,8 @@ public class LOCListImpl implements LOCList {
 		loc_date.addAttribute(new Attribute("year", Integer.toString(p_loc.getDateCompleted().getYear())));
 		loc_element.appendChild(loc_date);
 		
-		loc_element.addAttribute(new Attribute("Lines of Code",Integer.toString(p_loc.getLOCIntValue())));
-		loc_element.addAttribute(new Attribute("Description", p_loc.getDescription()));
+		loc_element.addAttribute(new Attribute("lines_of_code",Integer.toString(p_loc.getLOCIntValue())));
+		loc_element.addAttribute(new Attribute("description", p_loc.getDescription()));
         _root.appendChild(loc_element);
 	}
 
@@ -88,7 +88,7 @@ public class LOCListImpl implements LOCList {
 		Elements rs = _root.getChildElements("loc");
         for (int i = 0; i < rs.size(); i++)
         {
-        	if (rs.get(i).getAttribute("loc_Number").getValue().equals(Integer.toString(locAmount)))
+        	if (rs.get(i).getAttribute("loc_number").getValue().equals(Integer.toString(locAmount)))
         	{
         		_root.removeChild(rs.get(i));
         	}
@@ -100,7 +100,7 @@ public class LOCListImpl implements LOCList {
 		Elements rs = _root.getChildElements("loc");
         for (int i = 0; i < rs.size(); i++)
         {
-        	if (rs.get(i).getAttribute("loc_Number").getValue().equals(Integer.toString(p_loc_num)))
+        	if (rs.get(i).getAttribute("loc_number").getValue().equals(Integer.toString(p_loc_num)))
         	{
         		if (rs.get(i).getAttribute(p_attrib) != null)
         		{

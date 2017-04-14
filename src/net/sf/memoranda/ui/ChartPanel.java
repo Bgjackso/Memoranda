@@ -77,12 +77,12 @@ public class ChartPanel extends JPanel {
 		private ArrayList<Object[]> _data;
 
 		// Next loc 
-		private int _nextNumber;  // needs to be loc
+		private int _nextNumber;  
 
 		// Column names
 		private String[] ColumnNames = {
 				"Number",
-				"Date Finished",
+				"Date Completed",
 				"Lines of Code",
 				"Description"
 		};
@@ -136,11 +136,11 @@ public class ChartPanel extends JPanel {
 
 			String attrib = "";
 			String value = "";
-			if (col == 3){
-				attrib = "Lines of Code";
+			if (col == 2){
+				attrib = "lines_of_code";
 				value = Integer.toString((Integer)val);
 			}
-			if (col == 4)
+			if (col == 3)
 			{
 				attrib = "description";
 				value = (String)val;
@@ -202,21 +202,6 @@ public class ChartPanel extends JPanel {
 	}
 	
 	
-	//checking to see if the text field is valid to be logged and returns value if valid.
-			public void checkLOCValue(JTextField jtext){
-				String str = jtext.getText();
-				int result;
-				if (!str.matches(".*[1234567890].*")){
-					String text = "Invalid Value(s)";
-					jtext.setText(text);
-				} else{
-					result = Integer.parseInt(str);
-					loc_object.setLocNumber(result);
-					loc_object.setLOCStrValue(str);
-					jtext.setText(" ");
-				}
-			}
-		
 	  private List<Double> getGaussianData(int count) {
 		   	 
 		    List<Double> data = new ArrayList<Double>(count);
