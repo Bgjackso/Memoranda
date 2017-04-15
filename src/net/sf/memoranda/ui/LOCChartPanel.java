@@ -25,12 +25,14 @@ import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.Histogram;
 import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Defect;
 import net.sf.memoranda.DefectList;
 import net.sf.memoranda.History;
+import net.sf.memoranda.LOCList;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
@@ -38,8 +40,16 @@ import net.sf.memoranda.ResourcesList;
 import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.util.Local;
+import net.sf.memoranda.LOCListImpl;
+import net.sf.memoranda.LinesofCode;
+import net.sf.memoranda.DefectListImpl;
 
-public class LOCChartPanel extends JPanel {
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.Elements;
+
+@SuppressWarnings("unused")
+public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>{
 	/**
 	 * 
 	 */
@@ -65,6 +75,7 @@ public class LOCChartPanel extends JPanel {
 			new ExceptionDialog(ex);
 		}
   }
+	@SuppressWarnings("unchecked")
 	// inside the panel
 	void jbInit() throws Exception {
 		toolBar.setFloatable(false);
@@ -99,40 +110,129 @@ public class LOCChartPanel extends JPanel {
 		toolBar.add(historyBackB, null);
 		toolBar.add(historyForwardB, null);
 		this.add(toolBar, BorderLayout.NORTH);	
-//
-//			    ExampleChart<CategoryChart> exampleChart = new BarChart01();
-//			    CategoryChart chart = exampleChart.getChart();
-//			    new SwingWrapper<CategoryChart>(chart).displayChart();
 
-			 
-			    // Create Chart
-			    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("Score Histogram").xAxisTitle("Score").yAxisTitle("Number").build();
+			// Create LOC Chart
+			    CategoryChart locChart = new CategoryChartBuilder().width(800).height(455).title("Lines of Code").xAxisTitle("Day").yAxisTitle("Lines of Code").build();
 			 
 			    // Customize Chart
-			    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-			    chart.getStyler().setHasAnnotations(true);
+			    locChart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+			    locChart.getStyler().setHasAnnotations(true);
+			    
+			    // Series
+			    locChart.addSeries("Lines of Code", thirtyDays(), dummyData());
+			    
+			    
+			// Create Defects Chart
+			    CategoryChart defectsChart = new CategoryChartBuilder().width(800).height(455).title("Defects").xAxisTitle("Day").yAxisTitle("Defects").build();
+			 
+			    // Customize Chart
+			    defectsChart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+			    defectsChart.getStyler().setHasAnnotations(true);
 			 
 			    // Series
-			    chart.addSeries("test 1", Arrays.asList(new Integer[] { 0, 1, 2, 3, 4 }), Arrays.asList(new Integer[] { 4, 5, 9, 6, 5 }));
-
-		
-//		//chart panel
-//	    CategoryChart chart = new CategoryChartBuilder().width(400).height(600).title("Lines of Code By Date").xAxisTitle("Date").yAxisTitle("Count").build();
-//	 
-//	    // Customize Chart
-//	    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-//	    chart.getStyler().setAvailableSpaceFill(.96);
-//	    chart.getStyler().setOverlapped(true);
-//	 
-//	    // Series
-//	    Histogram histogram1 = new Histogram(getGaussianData(10000), 20, -20, 20);
-//	    Histogram histogram2 = new Histogram(getGaussianData(5000), 20, -20, 20);
-//	    chart.addSeries("Lines Of Code Per Day", histogram1.getxAxisData(), histogram1.getyAxisData());
-//	    chart.addSeries("Defects Found", histogram2.getxAxisData(), histogram2.getyAxisData());
-//		
-//		 JPanel chartPanel = new XChartPanel<CategoryChart>(chart);
-//	        this.add(chartPanel, BorderLayout.SOUTH);
+			    defectsChart.addSeries("Defects", thirtyDays(), dummyData());
+			    
+			    JPanel locChartPanel = new XChartPanel<CategoryChart>(locChart);
+		        this.add(locChartPanel, BorderLayout.NORTH);
+		        
+		        JPanel defectsChartPanel = new XChartPanel<CategoryChart>(defectsChart);
+		        this.add(defectsChartPanel, BorderLayout.SOUTH);
 	}
+	@Override
+	public CategoryChart getChart() {
+		return null;
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List LOCData(){
+		LOCList getData = CurrentProject.getLOCList();
+		Vector<LinesofCode> vectorData = getData.getAllLOC();
+		Vector<Integer> locData = new Vector();
+		for(int k = 1; k < vectorData.size(); k++){
+			if(vectorData.get(k) != null){
+			locData.add((Integer)vectorData.get(k).getLOCIntValue());
+			}else{
+				locData.add(0);
+			}
+		}
+		Object[] array = new Integer[30];
+		//fill array with zeroes so there will not be any invalid values on pull
+		for(int j = 0; j < array.length; j++){
+			array[j] = 0;
+		}
+		ArrayList<Object> data = new ArrayList<Object>();
+		array = (locData.toArray());
+		for(int i = 0; i < array.length; i++){
+			if(locData.elementAt(i) != null){
+				data.add(((Integer) array[i]).intValue());
+			}else{
+				data.add(i, 0);
+			}
+		}
+		return data;
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List DefectsData(){
+		DefectList getData = CurrentProject.getDefectList();
+		Vector<Defect> vectorData = getData.getAllDefect();
+		Vector<Integer> defectData = new Vector();
+		for(int k = 1; k < vectorData.size(); k++){
+			if(vectorData.get(k) != null){
+			defectData.add((Integer)vectorData.get(k).GetDefectNumber());
+		}else{
+			defectData.add(0);
+		}
+		}
+		Object[] array = new Integer[30];
+		//fill array with zeroes so there will not be any invalid values on pull
+		for(int j = 0; j < array.length; j++){
+			array[j] = 0;
+		}
+		ArrayList<Object> data = new ArrayList<Object>();
+		array = (defectData.toArray());
+		for(int i = 0; i < array.length; i++){
+			if(defectData.elementAt(i) != null){
+				data.add(((Integer) array[i]).intValue());
+			}else{
+				data.add(i, 0);
+			}
+		}
+		return data;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public ArrayList thirtyDays(){
+		ArrayList<Integer> data = new ArrayList<Integer>();
+		for(int i = 1; i <= 30; i++){
+			data.add(i);
+		}
+		return data;
+	}
+	
+	public List dummyData(){
+		List<Integer> list = new ArrayList<Integer>();
+		for(int i = 0; i < 30; i++){
+			list.add(5);
+		}
+		return list;
+	}
+//	//chart panel
+//    CategoryChart chart = new CategoryChartBuilder().width(400).height(600).title("Lines of Code By Date").xAxisTitle("Date").yAxisTitle("Count").build();
+// 
+//    // Customize Chart
+//    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+//    chart.getStyler().setAvailableSpaceFill(.96);
+//    chart.getStyler().setOverlapped(true);
+// 
+//    // Series
+//    Histogram histogram1 = new Histogram(getGaussianData(10000), 20, -20, 20);
+//    Histogram histogram2 = new Histogram(getGaussianData(5000), 20, -20, 20);
+//    chart.addSeries("Lines Of Code Per Day", histogram1.getxAxisData(), histogram1.getyAxisData());
+//    chart.addSeries("Defects Found", histogram2.getxAxisData(), histogram2.getyAxisData());
+//	
+//	 JPanel chartPanel = new XChartPanel<CategoryChart>(chart);
+//        this.add(chartPanel, BorderLayout.SOUTH);
 	
 //  private List<Double> getGaussianData(int count) {
 //	   	 
