@@ -413,10 +413,12 @@ public class PSPPanel extends JPanel{
 		  private long summedTime = 0;
 
 		  public void startTimer() {
-		      running = true;
-		      paused = false;
-		      runThread = new Thread(this);
-		      runThread.start();
+			  if (!running){
+				  running = true;
+			      paused = false;
+			      runThread = new Thread(this);
+			      runThread.start();
+			  }
 		  }
 
 		  public void pauseTimer() {
