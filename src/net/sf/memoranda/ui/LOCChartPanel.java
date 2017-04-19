@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
@@ -112,28 +113,28 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 		this.add(toolBar, BorderLayout.NORTH);	
 
 			// Create LOC Chart
-			    CategoryChart locChart = new CategoryChartBuilder().width(800).height(455).title("Lines of Code").xAxisTitle("Day").yAxisTitle("Lines of Code").build();
+			    CategoryChart locChart = new CategoryChartBuilder().width(800).height(400).title("Lines of Code").xAxisTitle("Day").yAxisTitle("Lines of Code").build();
 			 
 			    // Customize Chart
 			    locChart.getStyler().setLegendPosition(LegendPosition.InsideNW);
 			    locChart.getStyler().setHasAnnotations(true);
 			    
 			    // Series
-			    locChart.addSeries("Lines of Code", thirtyDays(), dummyData());
+			    locChart.addSeries("Lines of Code", thirtyDaysLOC(), dummyDataLOC());
 			    
 			    
 			// Create Defects Chart
-			    CategoryChart defectsChart = new CategoryChartBuilder().width(800).height(455).title("Defects").xAxisTitle("Day").yAxisTitle("Defects").build();
+			    CategoryChart defectsChart = new CategoryChartBuilder().width(800).height(400).title("Defects").xAxisTitle("Day").yAxisTitle("Defects").build();
 			 
 			    // Customize Chart
 			    defectsChart.getStyler().setLegendPosition(LegendPosition.InsideNW);
 			    defectsChart.getStyler().setHasAnnotations(true);
 			 
 			    // Series
-			    defectsChart.addSeries("Defects", thirtyDays(), dummyData());
+			    defectsChart.addSeries("Defects", thirtyDaysLOC(), dummyDataDefects());
 			    
 			    JPanel locChartPanel = new XChartPanel<CategoryChart>(locChart);
-		        this.add(locChartPanel, BorderLayout.NORTH);
+		        this.add(locChartPanel, BorderLayout.CENTER);
 		        
 		        JPanel defectsChartPanel = new XChartPanel<CategoryChart>(defectsChart);
 		        this.add(defectsChartPanel, BorderLayout.SOUTH);
@@ -148,9 +149,13 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 		LOCList getData = CurrentProject.getLOCList();
 		Vector<LinesofCode> vectorData = getData.getAllLOC();
 		Vector<Integer> locData = new Vector();
+		Integer value = 1;
 		for(int k = 1; k < vectorData.size(); k++){
 			if(vectorData.get(k) != null){
-			locData.add((Integer)vectorData.get(k).getLOCIntValue());
+				locData.add(1);
+//				if(vectorData.get(k+1).getDateCompleted() == vectorData.get(k).getDateCompleted()){
+//					locData.add(value + 1);
+//				}
 			}else{
 				locData.add(0);
 			}
@@ -202,7 +207,9 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public ArrayList thirtyDays(){
+	public ArrayList thirtyDaysLOC(){
+//		LOCList getData = CurrentProject.getLOCList();
+//		Vector<LinesofCode> vectorData = getData.getAllLOC();
 		ArrayList<Integer> data = new ArrayList<Integer>();
 		for(int i = 1; i <= 30; i++){
 			data.add(i);
@@ -210,10 +217,21 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 		return data;
 	}
 	
-	public List dummyData(){
+	
+	public List dummyDataLOC(){
 		List<Integer> list = new ArrayList<Integer>();
+		Random r = new Random();
 		for(int i = 0; i < 30; i++){
-			list.add(5);
+			list.add(r.nextInt(100));
+		}
+		return list;
+	}
+	
+	public List dummyDataDefects(){
+		List<Integer> list = new ArrayList<Integer>();
+		Random r = new Random();
+		for(int i = 0; i < 30; i++){
+			list.add(r.nextInt(35));
 		}
 		return list;
 	}
