@@ -64,8 +64,7 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 	JScrollPane scrollPane = new JScrollPane();
 
 	DailyItemsPanel parentPanel = null;
-	
-	//public class Chart{
+
 	
 	// Things inside the panel that people need to see!
 	public LOCChartPanel(DailyItemsPanel _parentPanel){
@@ -113,7 +112,7 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 		this.add(toolBar, BorderLayout.NORTH);	
 
 			// Create LOC Chart
-			    CategoryChart locChart = new CategoryChartBuilder().width(800).height(400).title("Lines of Code").xAxisTitle("Day").yAxisTitle("Lines of Code").build();
+			    CategoryChart locChart = new CategoryChartBuilder().width(800).height(455).title("Lines of Code").xAxisTitle("Day").yAxisTitle("Lines of Code").build();
 			 
 			    // Customize Chart
 			    locChart.getStyler().setLegendPosition(LegendPosition.InsideNW);
@@ -124,17 +123,17 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 			    
 			    
 			// Create Defects Chart
-			    CategoryChart defectsChart = new CategoryChartBuilder().width(800).height(400).title("Defects").xAxisTitle("Day").yAxisTitle("Defects").build();
+			    CategoryChart defectsChart = new CategoryChartBuilder().width(800).height(455).title("Defects").xAxisTitle("Day").yAxisTitle("Defects").build();
 			 
 			    // Customize Chart
 			    defectsChart.getStyler().setLegendPosition(LegendPosition.InsideNW);
 			    defectsChart.getStyler().setHasAnnotations(true);
 			 
 			    // Series
-			    defectsChart.addSeries("Defects", thirtyDaysLOC(), DefectsData());
+			    defectsChart.addSeries("Defects", thirtyDaysLOC(), dummyDataDefects());
 			    
 			    JPanel locChartPanel = new XChartPanel<CategoryChart>(locChart);
-		        this.add(locChartPanel, BorderLayout.CENTER);
+		        this.add(locChartPanel, BorderLayout.NORTH);
 		        
 		        JPanel defectsChartPanel = new XChartPanel<CategoryChart>(defectsChart);
 		        this.add(defectsChartPanel, BorderLayout.SOUTH);
@@ -143,61 +142,61 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 	public CategoryChart getChart() {
 		return null;
 	}
-	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List LOCData(){
-		LOCList getData = CurrentProject.getLOCList();
-		Vector<LinesofCode> vectorData = getData.getAllLOC();
-		Vector<Integer> locData = new Vector();
-		Integer value = 1;
-		for(int k = 1; k < vectorData.size(); k++){
-			if(vectorData.get(k) != null){
-				locData.add(1);
-//				if(vectorData.get(k+1).getDateCompleted() == vectorData.get(k).getDateCompleted()){
-//					locData.add(value + 1);
-//				}
-			}else{
-				locData.add(0);
-			}
-		}
-		Object[] array = new Integer[30];
-		//fill array with zeroes so there will not be any invalid values on pull
-		for(int j = 0; j < array.length; j++){
-			array[j] = 0;
-		}
-		ArrayList<Object> data = new ArrayList<Object>();
-		array = (locData.toArray());
-		for(int i = 0; i < array.length; i++){
-			if(locData.elementAt(i) != null){
-				data.add(((Integer) array[i]).intValue());
-			}else{
-				data.add(i, 0);
-			}
-		}
-		return data;
-	}
-	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List DefectsData(){
-		DefectList getData = CurrentProject.getDefectList();
-		Vector<Defect> vectorData = getData.getAllDefect();
-		Vector<Integer> defectData = new Vector();
-		//represents 30 days in the month to hold data
-		Object[] array = new Integer[30];
-		//fill array with zeroes so there will not be any invalid values on pull
-		for(int j = 0; j < array.length; j++){
-			array[j] = 0;
-		}
-		
-		CalendarDate cur_date = vectorData.get(0).GetDateFound();
-		int count = 0;
-		for(int k = 1; k < vectorData.size(); k++){
-			Defect d = vectorData.get(k);
-			if (d.GetDateFound().equals(cur_date)){
-				count = count + 1; 
-				System.out.println(count);
-			}
-			
+	/*This is for the future functionality to pull from actual LOC entered by the user --needs fixing*/
+//	@SuppressWarnings({ "rawtypes", "unchecked" })
+//	public List LOCData(){
+//		LOCList getData = CurrentProject.getLOCList();
+//		Vector<LinesofCode> vectorData = getData.getAllLOC();
+//		Vector<Integer> locData = new Vector();
+//		Integer value = 1;
+//		for(int k = 1; k < vectorData.size(); k++){
+//			if(vectorData.get(k) != null){
+//				locData.add(1);
+////				if(vectorData.get(k+1).getDateCompleted() == vectorData.get(k).getDateCompleted()){
+////					locData.add(value + 1);
+////				}
+//			}else{
+//				locData.add(0);
+//			}
+//		}
+//		Object[] array = new Integer[30];
+//		//fill array with zeroes so there will not be any invalid values on pull
+//		for(int j = 0; j < array.length; j++){
+//			array[j] = 0;
+//		}
+//		ArrayList<Object> data = new ArrayList<Object>();
+//		array = (locData.toArray());
+//		for(int i = 0; i < array.length; i++){
+//			if(locData.elementAt(i) != null){
+//				data.add(((Integer) array[i]).intValue());
+//			}else{
+//				data.add(i, 0);
+//			}
+//		}
+//		return data;
+//	}
+	/*This is for future functionality to read from actual defects entered by user --needs fixing*/
+//	@SuppressWarnings({ "rawtypes", "unchecked" })
+//	public List DefectsData(){
+//		DefectList getData = CurrentProject.getDefectList();
+//		Vector<Defect> vectorData = getData.getAllDefect();
+//		Vector<Integer> defectData = new Vector();
+//		//represents 30 days in the month to hold data
+//		Object[] array = new Integer[30];
+//		//fill array with zeroes so there will not be any invalid values on pull
+//		for(int j = 0; j < array.length; j++){
+//			array[j] = 0;
+//		}
+//		
+//		CalendarDate cur_date = vectorData.get(0).GetDateFound();
+//		int count = 0;
+//		for(int k = 1; k < vectorData.size(); k++){
+//			Defect d = vectorData.get(k);
+//			if (d.GetDateFound().equals(cur_date)){
+//				count = count + 1; 
+//				System.out.println(count);
+//			}
+//			
 			
 			/*
 			if(vectorData.get(k) != null){
@@ -205,19 +204,19 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 			}else{
 				defectData.add(0);
 			}*/
-		}
-		ArrayList<Object> data = new ArrayList<Object>();
-		
-		array = (defectData.toArray());
-		for(int i = 0; i < array.length; i++){
-			if(defectData.elementAt(i) != null){
-				data.add(((Integer) array[i]).intValue());
-			}else{
-				data.add(i, 0);
-			}
-		}
-		return data;
-	}
+//		}
+//		ArrayList<Object> data = new ArrayList<Object>();
+//		
+//		array = (defectData.toArray());
+//		for(int i = 0; i < array.length; i++){
+//			if(defectData.elementAt(i) != null){
+//				data.add(((Integer) array[i]).intValue());
+//			}else{
+//				data.add(i, 0);
+//			}
+//		}
+//		return data;
+//	}
 	
 	@SuppressWarnings("rawtypes")
 	public ArrayList thirtyDaysLOC(){
@@ -248,30 +247,4 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 		}
 		return list;
 	}
-//	//chart panel
-//    CategoryChart chart = new CategoryChartBuilder().width(400).height(600).title("Lines of Code By Date").xAxisTitle("Date").yAxisTitle("Count").build();
-// 
-//    // Customize Chart
-//    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-//    chart.getStyler().setAvailableSpaceFill(.96);
-//    chart.getStyler().setOverlapped(true);
-// 
-//    // Series
-//    Histogram histogram1 = new Histogram(getGaussianData(10000), 20, -20, 20);
-//    Histogram histogram2 = new Histogram(getGaussianData(5000), 20, -20, 20);
-//    chart.addSeries("Lines Of Code Per Day", histogram1.getxAxisData(), histogram1.getyAxisData());
-//    chart.addSeries("Defects Found", histogram2.getxAxisData(), histogram2.getyAxisData());
-//	
-//	 JPanel chartPanel = new XChartPanel<CategoryChart>(chart);
-//        this.add(chartPanel, BorderLayout.SOUTH);
-	
-//  private List<Double> getGaussianData(int count) {
-//	   	 
-//	    List<Double> data = new ArrayList<Double>(count);
-//	    Random r = new Random();
-//	    for (int i = 0; i < count; i++) {
-//	      data.add(r.nextGaussian() * 10);
-//	    }
-//	    return data;
-//	  }
-	}
+}
