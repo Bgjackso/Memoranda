@@ -29,6 +29,7 @@ public class CurrentProject {
     private static NoteList _notelist = null;
     private static ResourcesList _resources = null;
     private static DefectList _defects = null;
+    private static LOCList _loc = null;
     private static Vector projectListeners = new Vector();
 
         
@@ -54,6 +55,7 @@ public class CurrentProject {
         _tasklist = CurrentStorage.get().openTaskList(_project);
         _notelist = CurrentStorage.get().openNoteList(_project);
         _defects = CurrentStorage.get().openDefectList(_project);
+        _loc = CurrentStorage.get().openLOCList(_project);
         _resources = CurrentStorage.get().openResourcesList(_project);
         AppFrame.addExitListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -83,6 +85,9 @@ public class CurrentProject {
     {
     	return _defects;
     }
+    public static LOCList getLOCList() {
+		return _loc;
+	}
 
     public static void set(Project project) {
         if (project.getID().equals(_project.getID())) return;
@@ -90,12 +95,14 @@ public class CurrentProject {
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
         ResourcesList newresources = CurrentStorage.get().openResourcesList(project);
         DefectList newdefects = CurrentStorage.get().openDefectList(project);
+        LOCList newloc = CurrentStorage.get().openLOCList(project);
         notifyListenersBefore(project, newnotelist, newtasklist, newresources);
         _project = project;
         _tasklist = newtasklist;
         _notelist = newnotelist;
         _resources = newresources;
         _defects = newdefects;
+        _loc = newloc;
         notifyListenersAfter();
         Context.put("LAST_OPENED_PROJECT_ID", project.getID());
     }
@@ -110,7 +117,7 @@ public class CurrentProject {
 
     private static void notifyListenersBefore(Project project, NoteList nl, TaskList tl, ResourcesList rl) {
         for (int i = 0; i < projectListeners.size(); i++) {
-            ((ProjectListener)projectListeners.get(i)).projectChange(project, nl, tl, rl, _defects);
+            ((ProjectListener)projectListeners.get(i)).projectChange(project, nl, tl, rl, _defects, _loc);
             /*DEBUGSystem.out.println(projectListeners.get(i));*/
         }
     }
@@ -128,6 +135,7 @@ public class CurrentProject {
         storage.storeTaskList(_tasklist, _project); 
         storage.storeResourcesList(_resources, _project);
         storage.storeDefectList(_defects, _project);
+        storage.storeLOCList(_loc, _project);
         storage.storeProjectManager();
     }
     
@@ -137,5 +145,7 @@ public class CurrentProject {
         _notelist = null;
         _resources = null;
         _defects = null;
+        _loc = null;
     }
+	
 }
