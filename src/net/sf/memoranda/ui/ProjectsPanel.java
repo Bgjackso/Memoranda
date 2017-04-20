@@ -376,7 +376,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	void ppDeleteProject_actionPerformed(ActionEvent e) {
 		String msg;
 		Project prj;
-		Vector toremove = new Vector();
+		Vector<String> toremove = new Vector();
 		
 		/* if (prjTablePanel.projectsTable.getSelectedRows().length > 1) {  // <-- deleting current item change may be here
 			msg =Local.getString("Delete") + " " + prjTablePanel.projectsTable.getSelectedRows().length
