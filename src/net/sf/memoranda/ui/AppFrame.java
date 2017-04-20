@@ -146,13 +146,6 @@ public class AppFrame extends JFrame {
                                 ppImport_actionPerformed(e);
                         }
                 };
-/*        public Action importOneNoteAction =
-                new AbstractAction(Local.getString("Import one note")) {
-
-                public void actionPerformed(ActionEvent e) {
-                        p1Import_actionPerformed(e);
-                }
-        }; */
     
     // creating J menu items for Project options {
     JMenuItem jMenuFileNewPrj = new JMenuItem();
