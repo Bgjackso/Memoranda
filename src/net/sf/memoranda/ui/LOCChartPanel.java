@@ -131,7 +131,7 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 			    defectsChart.getStyler().setHasAnnotations(true);
 			 
 			    // Series
-			    defectsChart.addSeries("Defects", thirtyDaysLOC(), dummyDataDefects());
+			    defectsChart.addSeries("Defects", thirtyDaysLOC(), DefectsData());
 			    
 			    JPanel locChartPanel = new XChartPanel<CategoryChart>(locChart);
 		        this.add(locChartPanel, BorderLayout.CENTER);
@@ -182,19 +182,32 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 		DefectList getData = CurrentProject.getDefectList();
 		Vector<Defect> vectorData = getData.getAllDefect();
 		Vector<Integer> defectData = new Vector();
+		
+		CalendarDate cur_date = vectorData.get(0).GetDateFound();
+		int count = 0;
 		for(int k = 1; k < vectorData.size(); k++){
+			Defect d = vectorData.get(k);
+			if (d.GetDateFound().equals(cur_date)){
+				count = count + 1; 
+				System.out.println(count);
+			}
+			
+			
+			/*
 			if(vectorData.get(k) != null){
-			defectData.add((Integer)vectorData.get(k).GetDefectNumber());
-		}else{
-			defectData.add(0);
+				defectData.add((Integer)vectorData.get(k).GetDefectNumber());
+			}else{
+				defectData.add(0);
+			}*/
 		}
-		}
+		
 		Object[] array = new Integer[30];
 		//fill array with zeroes so there will not be any invalid values on pull
 		for(int j = 0; j < array.length; j++){
 			array[j] = 0;
 		}
 		ArrayList<Object> data = new ArrayList<Object>();
+		
 		array = (defectData.toArray());
 		for(int i = 0; i < array.length; i++){
 			if(defectData.elementAt(i) != null){
