@@ -182,6 +182,12 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 		DefectList getData = CurrentProject.getDefectList();
 		Vector<Defect> vectorData = getData.getAllDefect();
 		Vector<Integer> defectData = new Vector();
+		//represents 30 days in the month to hold data
+		Object[] array = new Integer[30];
+		//fill array with zeroes so there will not be any invalid values on pull
+		for(int j = 0; j < array.length; j++){
+			array[j] = 0;
+		}
 		
 		CalendarDate cur_date = vectorData.get(0).GetDateFound();
 		int count = 0;
@@ -199,12 +205,6 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 			}else{
 				defectData.add(0);
 			}*/
-		}
-		
-		Object[] array = new Integer[30];
-		//fill array with zeroes so there will not be any invalid values on pull
-		for(int j = 0; j < array.length; j++){
-			array[j] = 0;
 		}
 		ArrayList<Object> data = new ArrayList<Object>();
 		
