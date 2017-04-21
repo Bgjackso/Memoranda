@@ -184,7 +184,7 @@ private Vector selectionListeners = new Vector();
     navbPanel.setMinimumSize(new Dimension(202, 30));
     navbPanel.setOpaque(false);
     navbPanel.setPreferredSize(new Dimension(155, 30));
-    jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 29)); //made day font larger
+    jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 26)); //made day font larger
     jnCalendar.setFont(new java.awt.Font("Dialog", 0, 13));
     jnCalendar.setGridColor(Color.lightGray);
     jnCalendarPanel.setLayout(borderLayout5);

@@ -112,13 +112,17 @@ public class PSPPanel extends JPanel {
 		toolBar.add(addRowBtn);
 		toolBar.add(deleteBtn);
 		toolBar.add(addLOC);
+		addLOC.setBackground(Color.GRAY);
+		addLOC.setForeground(Color.WHITE);
 		toolBar.add(deleteLOC);
+		deleteLOC.setBackground(Color.GRAY);
+		deleteLOC.setForeground(Color.WHITE);
 		
 		this.add(toolBar, BorderLayout.NORTH);	
 		
-		
 		LocTableModel tableModelloc = new LocTableModel();
 		JTable tableloc = new JTable(tableModelloc);
+		
 		JScrollPane scrollPaneloc = new JScrollPane(tableloc);
 		
 		tableloc.getColumnModel().getColumn(0).setPreferredWidth(20*1000);		
@@ -144,10 +148,7 @@ public class PSPPanel extends JPanel {
 				tableModelloc.deleteRows(tableloc.getSelectedRows());
 			}
 		});
-		
-		
-			
-		
+	
 		//Defect Log Table Creator	
 		DefectPanel defectLog = new DefectPanel();
 		TableModel tableModel = defectLog.new DefectsTableModel();
@@ -231,9 +232,6 @@ public class PSPPanel extends JPanel {
 				tableModelloc.populateTable();
 			}
 		}); 
-		
-	
-	
 	}
 	public class LocTableModel extends AbstractTableModel {
 		/**
