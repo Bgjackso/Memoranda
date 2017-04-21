@@ -107,8 +107,6 @@ public class PSPPanel extends JPanel {
 		toolBar.add(historyBackB, null);
 		toolBar.add(historyForwardB, null);
 		
-		//TIMER WAS HERE
-
 		toolBar.add(addRowBtn);
 		toolBar.add(deleteBtn);
 		toolBar.add(addLOC);
