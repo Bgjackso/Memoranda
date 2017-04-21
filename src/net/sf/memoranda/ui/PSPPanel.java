@@ -61,14 +61,6 @@ public class PSPPanel extends JPanel {
 			JButton deleteLOC =  new JButton("Delete loc");
 
 	DailyItemsPanel parentPanel = null;
-
-	//PSP Timer
-	JPanel timerPanel = new JPanel();
-	JLabel time = new JLabel("Press 'Start' to begin", JLabel.CENTER);
-    PSPTimer timer = new PSPTimer();
-    JButton pause = new JButton ("Pause");
-    JButton start = new JButton ("Start");
-    JButton reset = new JButton ("Reset");
 	
 	// Things inside the panel that people need to see!
 	public PSPPanel(DailyItemsPanel _parentPanel){
@@ -239,87 +231,9 @@ public class PSPPanel extends JPanel {
 				tableModelloc.populateTable();
 			}
 		}); 
-
-		JScrollPane scrollPane3 = new JScrollPane(timerPanel);
-		start.addActionListener(new starts());
-		pause.addActionListener(new starts());
-		reset.addActionListener(new starts());
-		time.setBackground(Color.WHITE);
-		timerPanel.add(time);
-		time.setFont(new Font("Consolas", Font.BOLD, 20));
-		time.setForeground(Color.BLACK);
-		timerPanel.add(start);
-		timerPanel.add(pause);
-		timerPanel.add(reset);
-
-		this.add(scrollPane3, BorderLayout.EAST); //add scrollPane4 first when complete
-	}
-	
-	public class starts implements ActionListener{
-        public void actionPerformed(ActionEvent event){
-            if(event.getSource() == start){
-            	timer.update(0);
-            	timer.startTimer();
-            }
-            else if (event.getSource() == pause){
-                timer.pauseTimer();
-            }else{
-            	timer.update(0);
-            	timer.resetTimer(); 
-            }
-        }
-    }
-	
-	public class PSPTimer implements Runnable{
-		  private Thread runThread;
-		  private boolean running = false;
-		  private boolean paused = false;
-		  private long summedTime = 0;
-
-		  public void startTimer() {
-			  if (!running){
-				  running = true;
-			      paused = false;
-			      runThread = new Thread(this);
-			      runThread.start();
-			  }
-		  }
-
-		  public void pauseTimer() {
-		      paused = true;
-		  }
-
-		  public void resetTimer() {
-		      if (paused){
-		    	  running = false;
-		          paused = false;
-		          summedTime = 0;
-		          update(0);
-		      }
-		  }
-		  
-		  public void saveTime(){
-		  	//TODO
-		  }
 		
-		  @Override
-		  public void run() {
-			  long startTime = System.currentTimeMillis();
-		      
-		      while(running && !paused) {
-		    	  update(summedTime + (System.currentTimeMillis() - startTime)); //timer causing issues
-		      }
-		      if(paused){
-		    	  summedTime += System.currentTimeMillis() - startTime;
-		      }else{
-		    	  summedTime = 0;
-		      }
-		  }
-		  
-		  public void update(long dTime){
-			  time.setText(String.valueOf(String.valueOf((dTime/1000)/60) + ":" 
-					  + String.valueOf((dTime/1000)%60) + ":" + String.valueOf((dTime)%1000)));
-		  } 
+	
+	
 	}
 	public class LocTableModel extends AbstractTableModel {
 		/**
