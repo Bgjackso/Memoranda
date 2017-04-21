@@ -3,6 +3,7 @@ package net.sf.memoranda.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.Vector;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -40,6 +42,7 @@ import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ResourcesList;
 import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CalendarDate;
+import net.sf.memoranda.PSPTimer;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.LOCListImpl;
 import net.sf.memoranda.LinesofCode;
@@ -62,6 +65,14 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 	JButton historyForwardB = new JButton();
 
 	JScrollPane scrollPane = new JScrollPane();
+	
+	//PSP Timer
+		JPanel timerPanel = new JPanel();
+		JLabel time = new JLabel("Press 'Start' to begin", JLabel.CENTER);
+	    PSPTimer timer = new PSPTimer();
+	    JButton pause = new JButton ("Pause");
+	    JButton start = new JButton ("Start");
+	    JButton reset = new JButton ("Reset");
 
 	DailyItemsPanel parentPanel = null;
 
@@ -84,6 +95,7 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 		scrollPane.getViewport().setBackground(Color.white);
 		this.add(scrollPane, BorderLayout.CENTER);
 		
+		/*
 		// Back button to go back one day previous to current date
 		historyBackB.setAction(History.historyBackAction);
 		historyBackB.setFocusable(false);
@@ -110,7 +122,23 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 		toolBar.add(historyBackB, null);
 		toolBar.add(historyForwardB, null);
 		this.add(toolBar, BorderLayout.NORTH);	
+		*/
+		JScrollPane scrollPane3 = new JScrollPane(timerPanel);
+		start.addActionListener(new starts());
+		pause.addActionListener(new starts());
+		reset.addActionListener(new starts());
+		time.setBackground(Color.WHITE);
+		timerPanel.add(time);
+		time.setFont(new Font("Consolas", Font.BOLD, 20));
+		time.setForeground(Color.BLACK);
+		timerPanel.add(start);
+		timerPanel.add(pause);
+		timerPanel.add(reset);
 
+		this.add(scrollPane3, BorderLayout.NORTH); //add scrollPane4 first when complete
+		
+		
+		
 			// Create LOC Chart
 			    CategoryChart locChart = new CategoryChartBuilder().width(800).height(455).title("Lines of Code").xAxisTitle("Day").yAxisTitle("Lines of Code").build();
 			 
@@ -133,11 +161,79 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 			    defectsChart.addSeries("Defects", thirtyDaysLOC(), dummyDataDefects());
 			    
 			    JPanel locChartPanel = new XChartPanel<CategoryChart>(locChart);
-		        this.add(locChartPanel, BorderLayout.NORTH);
+		        this.add(locChartPanel, BorderLayout.CENTER);
 		        
 		        JPanel defectsChartPanel = new XChartPanel<CategoryChart>(defectsChart);
 		        this.add(defectsChartPanel, BorderLayout.SOUTH);
 	}
+	
+	public class starts implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            if(event.getSource() == start){
+            	timer.update(0);
+            	timer.startTimer();
+            }
+            else if (event.getSource() == pause){
+                timer.pauseTimer();
+            }else{
+            	timer.update(0);
+            	timer.resetTimer(); 
+            }
+        }
+    }
+	
+	public class PSPTimer implements Runnable{
+		  private Thread runThread;
+		  private boolean running = false;
+		  private boolean paused = false;
+		  private long summedTime = 0;
+
+		  public void startTimer() {
+			  if (!running){
+				  running = true;
+			      paused = false;
+			      runThread = new Thread(this);
+			      runThread.start();
+			  }
+		  }
+
+		  public void pauseTimer() {
+		      paused = true;
+		  }
+
+		  public void resetTimer() {
+		      if (paused){
+		    	  running = false;
+		          paused = false;
+		          summedTime = 0;
+		          update(0);
+		      }
+		  }
+		  
+		  public void saveTime(){
+		  	//TODO
+		  }
+		
+		  @Override
+		  public void run() {
+			  long startTime = System.currentTimeMillis();
+		      
+		      while(running && !paused) {
+		    	  update(summedTime + (System.currentTimeMillis() - startTime)); //timer causing issues
+		      }
+		      if(paused){
+		    	  summedTime += System.currentTimeMillis() - startTime;
+		      }else{
+		    	  summedTime = 0;
+		      }
+		  }
+		  
+		  public void update(long dTime){
+			  time.setText(String.valueOf(String.valueOf((dTime/1000)/60) + ":" 
+					  + String.valueOf((dTime/1000)%60) + ":" + String.valueOf((dTime)%1000)));
+		  } 
+	}
+	
 	@Override
 	public CategoryChart getChart() {
 		return null;
