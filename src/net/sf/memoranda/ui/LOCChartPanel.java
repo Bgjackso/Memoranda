@@ -199,6 +199,7 @@ public class LOCChartPanel extends JPanel implements ExampleChart<CategoryChart>
 
 		  public void pauseTimer() {
 		      paused = true;
+		      running = false;
 		  }
 
 		  public void resetTimer() {
