@@ -14,7 +14,7 @@ import net.sf.memoranda.LinesofCode;
 import net.sf.memoranda.LOCList;
 import net.sf.memoranda.LOCListImpl;
 
-public class LocTest {
+public class LOCTest {
 	private static LOCList p_loclist = null;
 	
 	@BeforeClass
