@@ -184,7 +184,7 @@ private Vector selectionListeners = new Vector();
     navbPanel.setMinimumSize(new Dimension(202, 30));
     navbPanel.setOpaque(false);
     navbPanel.setPreferredSize(new Dimension(155, 30));
-    jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 29)); //made day font larger
+    jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 27)); //made day font larger
     jnCalendar.setFont(new java.awt.Font("Dialog", 0, 13));
     jnCalendar.setGridColor(Color.lightGray);
     jnCalendarPanel.setLayout(borderLayout5);
@@ -211,12 +211,7 @@ private Vector selectionListeners = new Vector();
         setCurrentDateDay(jnCalendar.get(), jnCalendar.get().getDay());
       }
     });
-    /*CurrentDate.addChangeListener(new ActionListener()  {
-      public void actionPerformed(ActionEvent e) {
-        _date = CurrentDate.get();
-        refreshView();
-      }
-    });*/
+
     monthsCB.setFont(new java.awt.Font("Dialog", 0, 11));
 
     monthsCB.addActionListener(new java.awt.event.ActionListener() {
@@ -232,11 +227,6 @@ private Vector selectionListeners = new Vector();
       }
     });
 
-   /* yearSpin.addChangeListener(new ChangeListener() {
-      public void stateChanged(ChangeEvent e) {
-        yearSpin_actionPerformed();
-      }
-    });*/
     CurrentProject.addProjectListener(new ProjectListener() {
             public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, DefectList dl, LOCList ll) {}
             public void projectWasChanged() {
@@ -300,13 +290,6 @@ public void addSelectionListener(ActionListener al) {
 	    notifyListeners();
 	  }
 
- /* void yearSpin_actionPerformed() {
-    if (ignoreChange) return;
-    _date = new CalendarDate(_date.getDay(), _date.getMonth(), ((Integer)yearSpin.getValue()).intValue());
-    jnCalendar.set(_date);
-    notifyListeners();
-  }*/
-
   void dayBackB_actionPerformed(ActionEvent e) {
     Calendar cal = _date.getCalendar();
     cal.add(Calendar.DATE, -1); cal.getTime();
@@ -328,7 +311,4 @@ public void addSelectionListener(ActionListener al) {
     refreshView();
     notifyListeners();
   }
-
-
-
 }
