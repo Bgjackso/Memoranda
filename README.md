@@ -28,7 +28,7 @@ MEMORANDA-PSP is opened by simply clicking the runnable-jar file on a PC or Mac 
 * Lines of Code Log for tracking LOC per day.
 
 
-* Charts Panel for importing Defect and LOC for visual representation over a 30-day period.
+* Charts Panel for importing Defect and LOC for visual representation over a 30-day period. 
 
 
 * iCalendar export option added to the File drop-down menu for linking your MEMORANDA-PSP calendar to a Google Calendar or other calendar application so you get updates for anything on the MEMORANDA-PSP calendar.
@@ -72,3 +72,6 @@ MEMORANDA-PSP is opened by simply clicking the runnable-jar file on a PC or Mac 
 
 * Agenda Panel optimized: removed unlinked buttons for stickers.
 
+**Upcoming Releases**
+
+* The Charts panel is currently displaying auto-generated data. The next release will implement full functionality for this feature. 
