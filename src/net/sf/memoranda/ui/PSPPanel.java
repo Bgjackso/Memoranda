@@ -2,7 +2,6 @@ package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -31,7 +30,6 @@ import net.sf.memoranda.LOCList;
 import net.sf.memoranda.History;
 import net.sf.memoranda.LOCList;
 import net.sf.memoranda.NoteList;
-import net.sf.memoranda.PSPTimer;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ResourcesList;
